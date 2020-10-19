@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Url Variables
     const notesUrl = 'http://localhost:3000/notes'
+    const userUrl = 'http://localhost:3000/user'
 
     // Html Variables
     let form = document.querySelector('.name-form')
@@ -12,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let li2 = document.createElement('li')
     let li3 = document.createElement('li')
     let li4 = document.createElement('li')
+    let h2 = document.createElement('h2')
 
     // notes variables
     let notesForm = document.createElement('form')
@@ -33,9 +35,16 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(notes => notes.forEach(note => buildNotes(note)))
     }
 
-    function postNote() {
-        fetch(notesUrl)
+    function fetchUser(id) {
+        fetch('http://localhost:3000/users/' + `${id}`)
+        .then(resp => resp.json())
+        .then(console.log)
     }
+
+    // function postNote() {
+    //     fetch(notesUrl)
+    // }
+
 
 
     // function
@@ -45,6 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
             mainDiv.innerHTML = ''
             buildMeditation()
             fetchNotes()
+            fetchUser()
         })
     }
 
@@ -53,6 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
         li2.innerText = '10 min'
         li3.innerText = '15 min'
         li4.innerText = '20 min'
+
         
         label.htmlFor = 'description'
         label.innerText = 'description:'
@@ -82,6 +93,7 @@ document.addEventListener('DOMContentLoaded', function() {
         span.innerText = `${note.date} ${note.description}`
         div.appendChild(span)
     }
+
 
 
 
