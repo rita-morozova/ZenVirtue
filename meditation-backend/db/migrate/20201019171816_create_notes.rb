@@ -1,7 +1,7 @@
 class CreateNotes < ActiveRecord::Migration[6.0]
   def change
     create_table :notes do |t|
-      t.DateTime :date
+      t.datetime :date
       t.belongs_to :meditation, null: false, foreign_key: true
       t.text :description
 
