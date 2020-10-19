@@ -1,5 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Variables
+    // Url Variables
+    const notesUrl = 'http://localhost:3000/notes'
+
+    // Html Variables
     let form = document.querySelector('.name-form')
     let mainDiv = document.querySelector('.main')
     let div = document.querySelector('.meditation')
@@ -9,15 +12,31 @@ document.addEventListener('DOMContentLoaded', function() {
     let li2 = document.createElement('li')
     let li3 = document.createElement('li')
     let li4 = document.createElement('li')
-    let counterH1 = document.createElement('h1')
-    counterH1.innerText  = 0
+
+    // notes variables
+    let notesForm = document.createElement('form')
+    let label = document.createElement('label')
+    let input = document.createElement('input')
+    let submitInput = document.createElement('input')
+    let span = document.createElement('span')
+    span.className = 'notes'
+    
 
     // call functions
     buildUser()
     
-    // Counter
-    const intervalCounter = () => counterH1.innerText++
-    const intervalHandler = window.setInterval(intervalCounter, 1000)
+    
+    // Fetch Functions
+    function fetchNotes() {
+        fetch(notesUrl)
+        .then(resp => resp.json())
+        .then(notes => notes.forEach(note => buildNotes(note)))
+    }
+
+    function postNote() {
+        fetch(notesUrl)
+    }
+
 
     // function
     function buildUser() {
@@ -25,6 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault()
             mainDiv.innerHTML = ''
             buildMeditation()
+            fetchNotes()
         })
     }
 
@@ -33,25 +53,36 @@ document.addEventListener('DOMContentLoaded', function() {
         li2.innerText = '10 min'
         li3.innerText = '15 min'
         li4.innerText = '20 min'
+        
+        label.htmlFor = 'description'
+        label.innerText = 'description:'
+        
+        input.type = 'text'
+        input.name = 'description'
 
-        counterH1.className = 'counter'
-        li1.addEventListener('click', countdownCounter())
-        li2.addEventListener('click', countdownCounter())
-        li3.addEventListener('click', countdownCounter())
-        li4.addEventListener('click', countdownCounter())
+        submitInput.type = 'submit'
+        submitInput.value = "Create Note"
 
-        h1.innerText = 'Name of Page'
+        notesForm.append(label, input, submitInput)
+        // li1.addEventListener('click', countdownCounter())
+        // li2.addEventListener('click', countdownCounter())
+        // li3.addEventListener('click', countdownCounter())
+        // li4.addEventListener('click', countdownCounter())
+
+        h1.innerText = 'ZenVirtue'
 
         ul.append(li1, li2, li3, li4)
 
-        div.appendChild(counterH1)
         div.appendChild(h1)
         div.appendChild(ul)
+        div.appendChild(notesForm)
     }
 
-    function countdownCounter(duration, display) {
-        let timer = duration
-
+    function buildNotes(note) {
+        span.innerText = `${note.date} ${note.description}`
+        div.appendChild(span)
     }
+
+
 
 })
