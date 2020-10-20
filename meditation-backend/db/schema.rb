@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 2020_10_19_171816) do
   end
 
   create_table "notes", force: :cascade do |t|
-    t.datetime "date"
+    t.string "date"
     t.integer "meditation_id", null: false
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
