@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Url Variables
     const notesUrl = 'http://localhost:3000/notes'
     const userUrl = 'http://localhost:3000/user'
+    const weatherUrl = 'http://api.openweathermap.org/data/2.5/weather?q=Seattle&appid=9cc9fd77f608b67b46f525134c991518&units=imperial'
 
     // Html Variables
     let form = document.querySelector('.name-form')
@@ -13,6 +14,11 @@ document.addEventListener('DOMContentLoaded', function() {
     let btn2 = document.createElement('button')
     let btn3 = document.createElement('button')
     let btn4 = document.createElement('button')
+
+    let divWeather = document.createElement('div')
+    let h1Weather = document.createElement('h1')
+    let weatherDesc = document.createElement('h2')
+    let weatherImg = document.createElement('img')
     
 
     // timer variables
@@ -34,6 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
     buildUser()
     
     
+    
     // Fetch Functions
     function fetchNotes() {
         fetch(notesUrl)
@@ -45,6 +52,12 @@ document.addEventListener('DOMContentLoaded', function() {
         fetch('http://localhost:3000/users/' + `${id}`)
         .then(resp => resp.json())
         .then(console.log)
+    }
+
+    function fetchWeather(){
+        fetch(weatherUrl)
+        .then(resp => resp.json())
+        .then(data => buildWeather(data))
     }
 
     // function postNote() {
@@ -59,6 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault()
             mainDiv.innerHTML = ''
             buildMeditation()
+            fetchWeather()
             fetchNotes()
             fetchUser()
         })
@@ -141,6 +155,17 @@ document.addEventListener('DOMContentLoaded', function() {
                clearInterval(myTimer)
            }
        }
+    }
+
+    function buildWeather(data){
+        divWeather.className ='weather'
+        div.appendChild(divWeather)
+        divWeather.append(h1Weather, weatherDesc, weatherImg)
+        h1Weather.innerHTML = data.main.temp
+        weatherDesc.innerHTML=data.weather[0].description
+        weatherImg.src = data.weather[0].icon
+
+
     }
 
   
