@@ -13,4 +13,5 @@ User.delete_all
 
 u1 = User.create(name: 'Dave', email: 'dave@gmail.com')
 m1 = Meditation.create(name: 'Break', user_id: u1.id)
-n1 = Note.create(date: DateTime.now(), meditation_id: m1.id, description: "thought about candy")
+n1 = Note.create(date: DateTime.now.strftime('%D'), meditation_id: m1.id, description: "thought about candy")
+n2 = Note.create(date: DateTime.now.strftime('%D'), meditation_id: m1.id, description: "break break")

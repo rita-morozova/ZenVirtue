@@ -27,8 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let label = document.createElement('label')
     let input = document.createElement('input')
     let submitInput = document.createElement('input')
-    let span = document.createElement('span')
-    span.className = 'notes'
+    
     
 
     // call functions
@@ -121,8 +120,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function buildNotes(note) {
-        span.innerText = `${note.date} ${note.description}`
-        div.appendChild(span)
+        let divNotes = document.createElement('div')
+        divNotes.className = 'notes'
+        divNotes.innerText = `${note.date} -  ${note.description}`
+        div.appendChild(divNotes)
     }
 
 
