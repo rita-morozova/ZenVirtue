@@ -161,6 +161,7 @@ document.addEventListener('DOMContentLoaded', function() {
         divWeather.className ='weather'
         div.appendChild(divWeather)
         divWeather.append(h1Weather, weatherDesc, weatherImg)
+        weatherImg.className = 'weather-icon'
         h1Weather.innerHTML = data.main.temp
         weatherDesc.innerHTML=data.weather[0].description
         weatherImg.src = data.weather[0].icon
