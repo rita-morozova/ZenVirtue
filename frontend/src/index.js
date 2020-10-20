@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', function() {
            let seconds = t % 60 // Seconds that can't be written in min
            let minutes = (t- seconds) / 60 // Gives the seconds that COULD be given in minutes
            timer.innerHTML = `${minutes} : ${seconds}`
-           if (t == 0){
+           if (t === 0){
                clearInterval(myTimer)
            }
        }
