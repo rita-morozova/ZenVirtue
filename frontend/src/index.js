@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let btn2 = document.createElement('button')
     let btn3 = document.createElement('button')
     let btn4 = document.createElement('button')
-    let h2 = document.createElement('h2')
+    
 
     // timer variables
   
@@ -21,8 +21,6 @@ document.addEventListener('DOMContentLoaded', function() {
     divTime.appendChild(timer)
     
     
-    
-
 
     // notes variables
     let notesForm = document.createElement('form')
@@ -90,11 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
         submitInput.value = "Create Note"
 
         notesForm.append(label, input, submitInput)
-        // li1.addEventListener('click', countdownCounter())
-        // li2.addEventListener('click', countdownCounter())
-        // li3.addEventListener('click', countdownCounter())
-        // li4.addEventListener('click', countdownCounter())
-
+       
         h1.innerText = 'ZenVirtue'
 
         divTime.append(btn1, btn2, btn3, btn4)
@@ -103,8 +97,26 @@ document.addEventListener('DOMContentLoaded', function() {
         div.appendChild(divTime)
         div.appendChild(notesForm)
 
-    
-      
+        btn1.addEventListener('click', (e) => {
+            e.preventDefault()
+            countDown(t = 300)
+        })
+
+        btn2.addEventListener('click', (e) => {
+            e.preventDefault()
+            countDown(t = 600)
+        })
+
+        btn3.addEventListener('click', (e) => {
+            e.preventDefault()
+            countDown(t = 900)
+        })
+
+        btn4.addEventListener('click', (e) => {
+            e.preventDefault()
+            countDown(t = 1200)
+        })
+       
 
     }
 
@@ -113,7 +125,26 @@ document.addEventListener('DOMContentLoaded', function() {
         div.appendChild(span)
     }
 
+    function countDown (t){
+        //t set to seconds in button.addEventListener
+       let myTimer = setInterval(myClock, 1000)
+
+        function myClock(){
+           --t
+           let seconds = t % 60 // Seconds that can't be written in min
+           let minutes = (t- seconds) / 60 // Gives the seconds that COULD be given in minutes
+           timer.innerHTML = `${minutes} : ${seconds}`
+           if (t == 0){
+               clearInterval(myTimer)
+           }
+       }
+    }
+
   
+   
+
+
+
 
 
 
