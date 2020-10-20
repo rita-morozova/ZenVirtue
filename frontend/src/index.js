@@ -73,14 +73,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     
     // function postNotes(e, user){
-       
+    //    console.log(e, user)
     //     fetch(notesUrl, {
     //         method: 'POST',
     //         headers: {
     //             'Content-Type': 'application/json',
     //             'Accept': 'application/json'
     //         },
-    //         body: JSON.stringify({description: e.target[0].value)})
+    //         body: JSON.stringify({description: e.target[0].value})
     //     })
     //     .then(resp => resp.json())
     //     .then(console.log)
