@@ -3,8 +3,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const notesUrl = 'http://localhost:3000/notes'
     const userUrl = 'http://localhost:3000/users'
     const weatherUrl = 'http://api.openweathermap.org/data/2.5/weather?q=Seattle&appid=9cc9fd77f608b67b46f525134c991518&units=imperial'
+    const meditationUrl ='http://localhost:3000/meditations'
 
     // Html Variables
+    let body = document.querySelector('body')
     let form = document.querySelector('.name-form')
     let mainDiv = document.querySelector('.main')
     let div = document.querySelector('.meditation')
@@ -15,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let btn3 = document.createElement('button')
     let btn4 = document.createElement('button')
 
+    // weather variables
     let divWeather = document.createElement('div')
     let h1Weather = document.createElement('h1')
     let weatherDesc = document.createElement('h2')
@@ -30,87 +33,17 @@ document.addEventListener('DOMContentLoaded', function() {
     let input = document.createElement('input')
     let submitInput = document.createElement('input')
 
+   
+
     // Audio
     let audioUrl = 'https://audionautix.com/Music/RunningWaters.mp3'
     let audio1 = new Audio(audioUrl)
 
     // call functions
     buildUser()
-       
-    // Fetch Functions
-    // function fetchNotes() {
-    //     fetch(notesUrl)
-    //     .then(resp => resp.json())
-    //     .then(notes => notes.forEach(note => buildNotes(note)))
-    // }
-
-    function getAllUsers(e){
-        fetch(userUrl)
-        .then(resp => resp.json())
-        .then (users => users.forEach(user => {if(user.name == e.target.name.value){
-            buildUser(user)
-            buildNotes(user)
-            buildMeditation(user)
-        }
-        }))
-    }
-
-    function postNotes(note_id, date, description){
-        let note = {note_id: note_id, date: date, description: description}
-        user.notes.push(note)
-
-        let noteData ={
-            notes: user.notes
-        }
-        fetch(notesUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(noteData)
-        })
-        .then(resp => resp.json())
-        .then(note => buildNotes(note))
-        // fetch(notesUrl, {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         'Accept': 'application/json'
-        //     },
-        //     body: JSON.stringify({unotes: note})
-        // })
-        // .then(resp => resp.json())
-        // .then(console.log)
-    }
-
-
-
    
-
-    // function fetchUser(id) {
-    //     fetch('http://localhost:3000/users/' + `${id}`)
-    //     .then(resp => resp.json())
-    //     .then(console.log)
-    //     .catch()
-    // }
-
-    // function postUser(name, email) {
-    //     userData = {
-    //         name: name,
-    //         email: email
-    //     }
-
-    //     configObj = {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             'Accept': 'application/json'
-    //         },
-    //         body: JSON.stringify(userData)
-    //     }
-
-    //     fetch(userUrl)
-    // }
+       
+    // // Fetch Functions
 
     function fetchWeather(){
         fetch(weatherUrl)
@@ -118,32 +51,101 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(data => buildWeather(data))
     }
 
-    function editNote(note, noteId) {
-        noteData = {
-            description: note.description
-        }
-
-        configObj = {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(noteData)
-        }
-
-        fetch(notesUrl + `/${noteId}`, configObj)
+    function getAllUsers(e){
+        fetch(userUrl)
         .then(resp => resp.json())
-        .then(note => buildNotes(note))
+        .then (users => users.forEach(user => {if(user.name == e.target.name.value){
+            buildNotes(user)
+            buildMeditationList(user)
+        }
+        }))
     }
 
-    // function
+    
+
+
+
+    // function fetchNotes() {
+    //     fetch(notesUrl)
+    //     .then(resp => resp.json())
+    //     .then(notes => notes.forEach(note => buildNotes(note)))
+    // }
+
+    
+    // function postNotes(e, user){
+       
+    //     fetch(notesUrl, {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'Accept': 'application/json'
+    //         },
+    //         body: JSON.stringify({description: e.target[0].value)})
+    //     })
+    //     .then(resp => resp.json())
+    //     .then(console.log)
+    // }
+
+
+
+   
+
+    // // function fetchUser(id) {
+    // //     fetch('http://localhost:3000/users/' + `${id}`)
+    // //     .then(resp => resp.json())
+    // //     .then(console.log)
+    // //     .catch()
+    // // }
+
+    // // function postUser(name, email) {
+    // //     userData = {
+    // //         name: name,
+    // //         email: email
+    // //     }
+
+    // //     configObj = {
+    // //         method: 'POST',
+    // //         headers: {
+    // //             'Content-Type': 'application/json',
+    // //             'Accept': 'application/json'
+    // //         },
+    // //         body: JSON.stringify(userData)
+    // //     }
+
+    // //     fetch(userUrl)
+    // // }
+
+   
+
+    // function editNote(note, noteId) {
+    //     noteData = {
+    //         description: note.description
+    //     }
+
+    //     configObj = {
+    //         method: 'PATCH',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'Accept': 'application/json'
+    //         },
+    //         body: JSON.stringify(noteData)
+    //     }
+
+    //     fetch(notesUrl + `/${noteId}`, configObj)
+    //     .then(resp => resp.json())
+    //     .then(note => buildNotes(note))
+    // }
+
+    // /////////////////////////
+
+    // // function
     function buildUser() {
         form.addEventListener('submit', (e) => {
             e.preventDefault()
             mainDiv.innerHTML = ''
             fetchWeather()
             getAllUsers(e)
+            buildMeditation(e)
         })
     }
 
@@ -176,6 +178,7 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault()
             postNotes(e, user)
         })
+
        
         h1.innerText = 'ZenVirtue'
 
@@ -222,9 +225,28 @@ document.addEventListener('DOMContentLoaded', function() {
         div.appendChild(divNotes)
 
 
-        editButton.addEventListener('click', editNote(note, note.id))
+        // editButton.addEventListener('click', editNote(note, note.id))
         })
 
+    }
+
+
+    function buildMeditationList(user){       
+        user.meditations.forEach(meditation => {
+
+        let divMeditations = document.createElement('div')
+        divMeditations.className = 'user-meditations-list'
+        divMeditations.innerText = `${meditation.name}`
+       
+
+        // editButton.innerText = 'Edit Note'
+        // deleteButton.innerText = 'Delete Note'
+        // divNotes.append(editButton, deleteButton)
+        body.appendChild(divMeditations)
+        
+
+        })
+        
     }
 
 
@@ -256,9 +278,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
     }
 
-    function buildAudio() {
-        
-    }
+    
 
   
    
