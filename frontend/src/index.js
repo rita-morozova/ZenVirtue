@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function countDown (t){
-        //t set to seconds in button.addEventListener
+        //t set to seconds in btn1.addEventListener
        let myTimer = setInterval(myClock, 1000)
 
         function myClock(){
