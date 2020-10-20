@@ -38,11 +38,54 @@ document.addEventListener('DOMContentLoaded', function() {
     buildUser()
        
     // Fetch Functions
-    function fetchNotes() {
-        fetch(notesUrl)
+    // function fetchNotes() {
+    //     fetch(notesUrl)
+    //     .then(resp => resp.json())
+    //     .then(notes => notes.forEach(note => buildNotes(note)))
+    // }
+
+    function getAllUsers(e){
+        fetch(userUrl)
         .then(resp => resp.json())
-        .then(notes => notes.forEach(note => buildNotes(note)))
+        .then (users => users.forEach(user => {if(user.name == e.target.name.value){
+            buildUser(user)
+            buildNotes(user)
+            buildMeditation(user)
+        }
+        }))
     }
+
+    function postNotes(note_id, date, description){
+        let note = {note_id: note_id, date: date, description: description}
+        user.notes.push(note)
+
+        let noteData ={
+            notes: user.notes
+        }
+        fetch(notesUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(noteData)
+        })
+        .then(resp => resp.json())
+        .then(note => buildNotes(note))
+        // fetch(notesUrl, {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         'Accept': 'application/json'
+        //     },
+        //     body: JSON.stringify({unotes: note})
+        // })
+        // .then(resp => resp.json())
+        // .then(console.log)
+    }
+
+
+
+   
 
     // function fetchUser(id) {
     //     fetch('http://localhost:3000/users/' + `${id}`)
@@ -99,14 +142,12 @@ document.addEventListener('DOMContentLoaded', function() {
         form.addEventListener('submit', (e) => {
             e.preventDefault()
             mainDiv.innerHTML = ''
-            buildMeditation()
             fetchWeather()
-            fetchNotes()
-            fetchUser()
+            getAllUsers(e)
         })
     }
 
-    function buildMeditation() {
+    function buildMeditation(user) {
         divTime.className = 'time-options'
         btn1.setAttribute('data-time', 300)
         btn2.setAttribute('data-time', 600)
@@ -128,7 +169,13 @@ document.addEventListener('DOMContentLoaded', function() {
         submitInput.type = 'submit'
         submitInput.value = "Create Note"
 
+
         notesForm.append(label, input, submitInput)
+
+        notesForm.addEventListener('submit', (e)=>{
+            e.preventDefault()
+            postNotes(e, user)
+        })
        
         h1.innerText = 'ZenVirtue'
 
@@ -162,7 +209,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     }
 
-    function buildNotes(note) {
+    function buildNotes(user) {
+        user.notes.forEach(note => {
         let editButton = document.createElement('button')
         let deleteButton = document.createElement('button')
         let divNotes = document.createElement('div')
@@ -173,7 +221,10 @@ document.addEventListener('DOMContentLoaded', function() {
         divNotes.append(editButton, deleteButton)
         div.appendChild(divNotes)
 
+
         editButton.addEventListener('click', editNote(note, note.id))
+        })
+
     }
 
 
