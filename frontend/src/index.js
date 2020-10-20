@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Url Variables
     const notesUrl = 'http://localhost:3000/notes'
-    const userUrl = 'http://localhost:3000/user'
+    const userUrl = 'http://localhost:3000/users'
     const weatherUrl = 'http://api.openweathermap.org/data/2.5/weather?q=Seattle&appid=9cc9fd77f608b67b46f525134c991518&units=imperial'
 
     // Html Variables
@@ -18,29 +18,25 @@ document.addEventListener('DOMContentLoaded', function() {
     let divWeather = document.createElement('div')
     let h1Weather = document.createElement('h1')
     let weatherDesc = document.createElement('h2')
-    let weatherImg = document.createElement('img')
-    
+    let weatherImg = document.createElement('img')   
 
     // timer variables
-  
     let timer = document.createElement('h2')
-    divTime.appendChild(timer)
-    
-    
+    divTime.appendChild(timer) 
 
     // notes variables
     let notesForm = document.createElement('form')
     let label = document.createElement('label')
     let input = document.createElement('input')
     let submitInput = document.createElement('input')
-    
-    
+
+    // Audio
+    let audioUrl = 'https://audionautix.com/Music/RunningWaters.mp3'
+    let audio1 = new Audio(audioUrl)
 
     // call functions
     buildUser()
-    
-    
-    
+       
     // Fetch Functions
     function fetchNotes() {
         fetch(notesUrl)
@@ -48,11 +44,30 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(notes => notes.forEach(note => buildNotes(note)))
     }
 
-    function fetchUser(id) {
-        fetch('http://localhost:3000/users/' + `${id}`)
-        .then(resp => resp.json())
-        .then(console.log)
-    }
+    // function fetchUser(id) {
+    //     fetch('http://localhost:3000/users/' + `${id}`)
+    //     .then(resp => resp.json())
+    //     .then(console.log)
+    //     .catch()
+    // }
+
+    // function postUser(name, email) {
+    //     userData = {
+    //         name: name,
+    //         email: email
+    //     }
+
+    //     configObj = {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'Accept': 'application/json'
+    //         },
+    //         body: JSON.stringify(userData)
+    //     }
+
+    //     fetch(userUrl)
+    // }
 
     function fetchWeather(){
         fetch(weatherUrl)
@@ -60,11 +75,24 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(data => buildWeather(data))
     }
 
-    // function postNote() {
-    //     fetch(notesUrl)
-    // }
+    function editNote(note, noteId) {
+        noteData = {
+            description: note.description
+        }
 
+        configObj = {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(noteData)
+        }
 
+        fetch(notesUrl + `/${noteId}`, configObj)
+        .then(resp => resp.json())
+        .then(note => buildNotes(note))
+    }
 
     // function
     function buildUser() {
@@ -109,10 +137,11 @@ document.addEventListener('DOMContentLoaded', function() {
         div.appendChild(h1)
         div.appendChild(divTime)
         div.appendChild(notesForm)
-
+        
         btn1.addEventListener('click', (e) => {
             e.preventDefault()
             countDown(t = 300)
+            audio1.play()
         })
 
         btn2.addEventListener('click', (e) => {
@@ -134,10 +163,17 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function buildNotes(note) {
+        let editButton = document.createElement('button')
+        let deleteButton = document.createElement('button')
         let divNotes = document.createElement('div')
         divNotes.className = 'notes'
         divNotes.innerText = `${note.date} -  ${note.description}`
+        editButton.innerText = 'Edit Note'
+        deleteButton.innerText = 'Delete Note'
+        divNotes.append(editButton, deleteButton)
         div.appendChild(divNotes)
+
+        editButton.addEventListener('click', editNote(note, note.id))
     }
 
 
@@ -159,13 +195,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function buildWeather(data){
         divWeather.className ='weather'
+        h1Weather.innerHTML = data.main.temp
         div.appendChild(divWeather)
         divWeather.append(h1Weather, weatherDesc, weatherImg)
-        h1Weather.innerHTML = data.main.temp
         weatherDesc.innerHTML=data.weather[0].description
         weatherImg.src = data.weather[0].icon
+        
+    }
 
-
+    function buildAudio() {
+        
     }
 
   
