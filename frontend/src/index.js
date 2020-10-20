@@ -125,6 +125,8 @@ document.addEventListener('DOMContentLoaded', function() {
         div.appendChild(span)
     }
 
+
+    ///build Countdown Timer
     function countDown (t){
         //t set to seconds in btn1.addEventListener
        let myTimer = setInterval(myClock, 1000)
