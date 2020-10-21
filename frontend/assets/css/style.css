@@ -2,7 +2,7 @@ ul {
     list-style-type: none;
 }
 
-.time-options button {
+#time-options button {
     color: black;
     width: 10%;
     height: 10%;
@@ -13,7 +13,7 @@ ul {
     transition: all 0.5s ease;
 }
 
-.time-options button:hover {
+#time-options button:hover {
     color: blue;
     background: white;
 }

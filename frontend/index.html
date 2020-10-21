@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="assets/css/style.css">
     </head>
     <body>
-        <div class="main">
+        <div class="welcome darkBack">
             <h1>Welcome to ZenVirtue</h1>
             <form class="name-form">
                 <label for="name">Name:</label>
@@ -17,8 +17,21 @@
                 <input type="submit" value="Start Meditation">
             </form>
         </div>
-        <div class="meditation">
-            
+        <div class="allMed darkBack" hidden=''>
+ 
+        </div>
+        <div class="individualMed darkBack" hidden=''>
+            <h1 class="topTitle">ZenVirtue</h1>
+            <div id='weather'>
+                <h1 id='weather-temp'></h1>
+                <h2 id='weather-desc'></h2>
+            </div>
+            <div id="time-options">
+                <button class='fiveMinBtn' data-time="300">5 min</button>
+                <button class='tenMinBtn' data-time="600">10 min</button>
+                <button class='fifteenMinBtn' data-time="900">15 min</button>
+                <button class='twentyMinBtn' data-time="1200">20 min</button>
+            </div>
         </div>
     </body>
 </html>

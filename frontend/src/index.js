@@ -5,27 +5,30 @@ document.addEventListener('DOMContentLoaded', function() {
     const weatherUrl = 'http://api.openweathermap.org/data/2.5/weather?q=Seattle&appid=9cc9fd77f608b67b46f525134c991518&units=imperial'
     const meditationUrl ='http://localhost:3000/meditations'
 
-    // Html Variables
+    // Main Html Variables
     let body = document.querySelector('body')
-    let form = document.querySelector('.name-form')
-    let mainDiv = document.querySelector('.main')
-    let div = document.querySelector('.meditation')
-    let h1 = document.createElement('h1')
-    let divTime = document.createElement('div')
-    let btn1 = document.createElement('button')
-    let btn2 = document.createElement('button')
-    let btn3 = document.createElement('button')
-    let btn4 = document.createElement('button')
 
-    // weather variables
-    let divWeather = document.createElement('div')
-    let h1Weather = document.createElement('h1')
-    let weatherDesc = document.createElement('h2')
-    let weatherImg = document.createElement('img')   
+    // Welcome HTML Variables
+    let welcomeForm = document.querySelector('.name-form')
+    let welcomeDiv = document.querySelector('.welcome')
 
-    // timer variables
+    // Individual Meditation HTML Variables
+    let individualMed = document.querySelector('.individualMed')
+
+    // Time HTML Variables
+    let timeOptions = document.querySelector('#time-options')
+    let fiveMinBtn = document.querySelector('.fiveMinBtn')
+    let tenMinBtn = document.querySelector('.tenMinBtn')
+    let fifteenMinBtn = document.querySelector('.fifteenMinBtn')
+    let twentyMinBtn = document.querySelector('.twentyMinBtn')
+
+    // Weather HTML variables
+    let weatherTemp = document.querySelector('#weather-temp')
+    let weatherDesc = document.querySelector('#weather-desc')
+
+    // Timer HTML Variables
     let timer = document.createElement('h2')
-    divTime.appendChild(timer) 
+    timeOptions.appendChild(timer) 
 
     // notes variables
     let notesForm = document.createElement('form')
@@ -33,18 +36,14 @@ document.addEventListener('DOMContentLoaded', function() {
     let input = document.createElement('input')
     let submitInput = document.createElement('input')
 
-   
-
-    // Audio
+    // Audio Variables
     let audioUrl = 'https://audionautix.com/Music/RunningWaters.mp3'
     let audio1 = new Audio(audioUrl)
 
     // call functions
     buildUser()
-   
-       
-    // // Fetch Functions
-
+      
+    // Fetch Functions
     function fetchWeather(){
         fetch(weatherUrl)
         .then(resp => resp.json())
@@ -61,88 +60,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }))
     }
 
-    
-
-
-
-    // function fetchNotes() {
-    //     fetch(notesUrl)
-    //     .then(resp => resp.json())
-    //     .then(notes => notes.forEach(note => buildNotes(note)))
-    // }
-
-    
-    // function postNotes(e, user){
-       
-    //     fetch(notesUrl, {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             'Accept': 'application/json'
-    //         },
-    //         body: JSON.stringify({description: e.target[0].value)})
-    //     })
-    //     .then(resp => resp.json())
-    //     .then(console.log)
-    // }
-
-
-
-   
-
-    // // function fetchUser(id) {
-    // //     fetch('http://localhost:3000/users/' + `${id}`)
-    // //     .then(resp => resp.json())
-    // //     .then(console.log)
-    // //     .catch()
-    // // }
-
-    // // function postUser(name, email) {
-    // //     userData = {
-    // //         name: name,
-    // //         email: email
-    // //     }
-
-    // //     configObj = {
-    // //         method: 'POST',
-    // //         headers: {
-    // //             'Content-Type': 'application/json',
-    // //             'Accept': 'application/json'
-    // //         },
-    // //         body: JSON.stringify(userData)
-    // //     }
-
-    // //     fetch(userUrl)
-    // // }
-
-   
-
-    // function editNote(note, noteId) {
-    //     noteData = {
-    //         description: note.description
-    //     }
-
-    //     configObj = {
-    //         method: 'PATCH',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             'Accept': 'application/json'
-    //         },
-    //         body: JSON.stringify(noteData)
-    //     }
-
-    //     fetch(notesUrl + `/${noteId}`, configObj)
-    //     .then(resp => resp.json())
-    //     .then(note => buildNotes(note))
-    // }
-
-    // /////////////////////////
-
-    // // function
+    // Functions
     function buildUser() {
-        form.addEventListener('submit', (e) => {
+        welcomeForm.addEventListener('submit', (e) => {
             e.preventDefault()
-            mainDiv.innerHTML = ''
+            welcomeDiv.hidden = true
+            individualMed.hidden = false
             fetchWeather()
             getAllUsers(e)
             buildMeditation(e)
@@ -150,18 +73,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function buildMeditation(user) {
-        divTime.className = 'time-options'
-        btn1.setAttribute('data-time', 300)
-        btn2.setAttribute('data-time', 600)
-        btn3.setAttribute('data-time', 900)
-        btn4.setAttribute('data-time', 1200)
-        btn1.innerText = '5 min'
-        btn2.innerText = '10 min'
-        btn3.innerText = '15 min'
-        btn4.innerText = '20 min'
-       
-
-        
         label.htmlFor = 'description'
         label.innerText = 'description:'
         
@@ -179,32 +90,26 @@ document.addEventListener('DOMContentLoaded', function() {
             postNotes(e, user)
         })
 
-       
-        h1.innerText = 'ZenVirtue'
-
-        divTime.append(btn1, btn2, btn3, btn4)
-
-        div.appendChild(h1)
-        div.appendChild(divTime)
-        div.appendChild(notesForm)
+        individualMed.appendChild(timeOptions)
+        individualMed.appendChild(notesForm)
         
-        btn1.addEventListener('click', (e) => {
+        fiveMinBtn.addEventListener('click', (e) => {
             e.preventDefault()
             countDown(t = 300)
             audio1.play()
         })
 
-        btn2.addEventListener('click', (e) => {
+        tenMinBtn.addEventListener('click', (e) => {
             e.preventDefault()
             countDown(t = 600)
         })
 
-        btn3.addEventListener('click', (e) => {
+        fifteenMinBtn.addEventListener('click', (e) => {
             e.preventDefault()
             countDown(t = 900)
         })
 
-        btn4.addEventListener('click', (e) => {
+        twentyMinBtn.addEventListener('click', (e) => {
             e.preventDefault()
             countDown(t = 1200)
         })
@@ -214,43 +119,28 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function buildNotes(user) {
         user.notes.forEach(note => {
-        let editButton = document.createElement('button')
-        let deleteButton = document.createElement('button')
-        let divNotes = document.createElement('div')
-        divNotes.className = 'notes'
-        divNotes.innerText = `${note.date} -  ${note.description}`
-        editButton.innerText = 'Edit Note'
-        deleteButton.innerText = 'Delete Note'
-        divNotes.append(editButton, deleteButton)
-        div.appendChild(divNotes)
-
-
-        // editButton.addEventListener('click', editNote(note, note.id))
+            let editButton = document.createElement('button')
+            let deleteButton = document.createElement('button')
+            let divNotes = document.createElement('div')
+            divNotes.className = 'notes'
+            divNotes.innerText = `${note.date} -  ${note.description}`
+            editButton.innerText = 'Edit Note'
+            deleteButton.innerText = 'Delete Note'
+            divNotes.append(editButton, deleteButton)
+            individualMed.appendChild(divNotes)
+            // editButton.addEventListener('click', editNote(note, note.id))
         })
-
     }
-
 
     function buildMeditationList(user){       
         user.meditations.forEach(meditation => {
-
-        let divMeditations = document.createElement('div')
-        divMeditations.className = 'user-meditations-list'
-        divMeditations.innerText = `${meditation.name}`
-       
-
-        // editButton.innerText = 'Edit Note'
-        // deleteButton.innerText = 'Delete Note'
-        // divNotes.append(editButton, deleteButton)
-        body.appendChild(divMeditations)
-        
-
+            let divMeditations = document.createElement('div')
+            divMeditations.className = 'user-meditations-list'
+            divMeditations.innerText = `${meditation.name}`
+            body.appendChild(divMeditations)
         })
-        
     }
 
-
-    ///build Countdown Timer
     function countDown (t){
         //t set to seconds in btn1.addEventListener
        let myTimer = setInterval(myClock, 1000)
@@ -267,27 +157,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function buildWeather(data){
-        divWeather.className ='weather'
-        h1Weather.innerHTML = data.main.temp
-        div.appendChild(divWeather)
-        divWeather.append(h1Weather, weatherDesc, weatherImg)
-        weatherImg.className = 'weather-icon'
-        h1Weather.innerHTML = data.main.temp
-        weatherDesc.innerHTML=data.weather[0].description
-        weatherImg.src = data.weather[0].icon
-        
+        weatherTemp.innerText = data.main.temp
+        weatherDesc.innerHTML=data.weather[0].description 
     }
-
-    
-
-  
-   
-
-
-
-
-
-
-
 
 })
