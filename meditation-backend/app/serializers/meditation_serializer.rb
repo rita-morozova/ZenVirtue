@@ -1,3 +1,3 @@
 class MeditationSerializer < ActiveModel::Serializer
-  attributes :id, :name, :notes
+  attributes :id, :name, :notes, :date
 end

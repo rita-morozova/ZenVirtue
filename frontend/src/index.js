@@ -303,7 +303,7 @@ document.addEventListener('DOMContentLoaded', function() {
             let deleteMedBtn = document.createElement('button')
             let liList = document.createElement('li')
             ulList.appendChild(liList)
-            liList.textContent = meditation.date
+            liList.textContent = `${meditation.date} - ${meditation.name}`
             liList.appendChild(editMedBtn)
             editMedBtn.innerText = 'Edit'
             liList.appendChild(deleteMedBtn)

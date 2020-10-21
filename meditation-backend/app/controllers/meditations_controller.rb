@@ -6,7 +6,7 @@ class MeditationsController < ApplicationController
   end
 
   def create
-    meditation = Meditation.create(date: params[:date], user_id: params[:user_id])
+    meditation = Meditation.create(date: params[:date], name: params[:name], user_id: params[:user_id])
     render json: meditation
   end
 

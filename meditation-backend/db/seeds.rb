@@ -15,9 +15,9 @@ u1 = User.create(name: 'Dave', email: 'dave@gmail.com')
 u2 = User.create(name: 'Rita', email: 'rita@gmail.com')
 u3 = User.create(name: 'Jasper', email: 'jasper@gmail.com')
 
-m1 = Meditation.create(date: DateTime.now.strftime('%D'), user_id: u1.id)
-m2 = Meditation.create(date: DateTime.now.strftime('%D'), user_id: u2.id)
-m3 = Meditation.create(date: DateTime.now.strftime('%D'), user_id: u1.id)
+m1 = Meditation.create(date: DateTime.now.strftime('%D'), name: 'Forest', user_id: u1.id)
+m2 = Meditation.create(date: DateTime.now.strftime('%D'), name: 'Sunrise in the mountatins', user_id: u2.id)
+m3 = Meditation.create(date: DateTime.now.strftime('%D'), name: 'City on Pause', user_id: u1.id)
 
 n1 = Note.create(date: DateTime.now.strftime('%D'), meditation_id: m1.id, description: "thought about candy")
 n2 = Note.create(date: DateTime.now.strftime('%D'), meditation_id: m1.id, description: "break break")
