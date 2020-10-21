@@ -11,7 +11,7 @@ class MeditationsController < ApplicationController
   end
 
   def destroy
-    meditation = Meditation.find(params[:id])
+    meditation = Meditation.find_by(id: params[:id])
     meditation.destroy
     render json: {"Message": "Session was deleted"}
   end

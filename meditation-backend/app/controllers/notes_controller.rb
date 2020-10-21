@@ -10,7 +10,7 @@ class NotesController < ApplicationController
     end
 
     def destroy
-        note = Note.find(params[:id])
+        note = Note.find_by(id: params[:id])
         note.destroy
         render json: {"Message": "Note was deleted"}
     end
