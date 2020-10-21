@@ -56,10 +56,31 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(resp => resp.json())
         .then (users => users.forEach(user => {if(user.name == e.target.name.value){
             buildNotes(user)
-            buildMeditationList(user)
+            // buildMeditationList(user)
         }
         }))
     }
+
+    function postUser(e){
+        e.preventDefault()
+
+        const user ={
+            name:e.target.name.value,
+            email: e.target.email.value
+        }
+
+        fetch(userUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type' : 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+        .catch (error => error.message)
+    }
+
+
 
     
 
@@ -142,6 +163,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function buildUser() {
         form.addEventListener('submit', (e) => {
             e.preventDefault()
+            postUser(e)
             mainDiv.innerHTML = ''
             fetchWeather()
             getAllUsers(e)
@@ -228,25 +250,6 @@ document.addEventListener('DOMContentLoaded', function() {
         // editButton.addEventListener('click', editNote(note, note.id))
         })
 
-    }
-
-
-    function buildMeditationList(user){       
-        user.meditations.forEach(meditation => {
-
-        let divMeditations = document.createElement('div')
-        divMeditations.className = 'user-meditations-list'
-        divMeditations.innerText = `${meditation.name}`
-       
-
-        // editButton.innerText = 'Edit Note'
-        // deleteButton.innerText = 'Delete Note'
-        // divNotes.append(editButton, deleteButton)
-        body.appendChild(divMeditations)
-        
-
-        })
-        
     }
 
 
