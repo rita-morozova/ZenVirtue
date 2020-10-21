@@ -45,7 +45,9 @@ document.addEventListener('DOMContentLoaded', function() {
     let h2List = document.createElement('h2')
     let meditationForm = document.createElement('form')
     let label1 = document.createElement('label')
+    let label2 = document.createElement('label')
     let input1 = document.createElement('input')
+    let input2 = document.createElement('input')
     let submitInput1 = document.createElement('input')
    
     // Audio
@@ -99,8 +101,27 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 
-    function postMeditation(){
-        
+    function postMeditation(e, user){
+        let newLi = document.createElement('li')
+        newLi.textContent = `${e.target.date.value} - ${e.target.name.value}`
+        ulList.appendChild(newLi)
+
+        const meditation = {
+            date: e.target.date.value,
+            name: e.target.name.value,
+            user_id: user.id
+        }
+        fetch(meditationUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type' : 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(meditation)
+        })
+        .then(resp => resp.json())
+        .then(data => meditationList(data))
+        .catch (error => error.message)
     }
 
     // function postNotes(e, user){
@@ -208,16 +229,17 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 
-    ///build Countdown Timer
-    function buildMeditationList(user){       
-        user.meditations.forEach(meditation => {
-            let divMeditations = document.createElement('div')
-            divMeditations.className = 'user-meditations-list'
-            divMeditations.innerText = `${meditation.name}`
-            body.appendChild(divMeditations)
-        })
-    }
+    
+    // function buildMeditationList(user){       
+    //     user.meditations.forEach(meditation => {
+    //         let divMeditations = document.createElement('div')
+    //         divMeditations.className = 'user-meditations-list'
+    //         divMeditations.innerText = `${meditation.name}`
+    //         individualMed.appendChild(divMeditations)
+    //     })
+    // }
 
+    ///build Countdown Timer
     function countDown (t){
         //t set to seconds in btn1.addEventListener
        let myTimer = setInterval(myClock, 1000)
@@ -249,7 +271,6 @@ document.addEventListener('DOMContentLoaded', function() {
             let liList = document.createElement('li')
             ulList.appendChild(liList)
             liList.textContent = `${meditation.date} - ${meditation.name}`
-            liList.appendChild(editMedBtn)
             editMedBtn.innerText = 'Edit'
             liList.appendChild(deleteMedBtn)
             deleteMedBtn.innerText = 'X'
@@ -260,22 +281,29 @@ document.addEventListener('DOMContentLoaded', function() {
         listDiv.className = 'meditation-list'
         h2List.textContent = "My Meditations"
 
-        label1.htmlFor = 'addNewMeditation'
-        label1.innerText = 'Add New Meditation'
+        label1.htmlFor = 'addNewMeditationDate'
+        label1.innerText = 'Date'
+
+        label2.htmlFor = 'addNewMeditationName'
+        label2.innerText = 'Name'
         
         input1.type = 'text'
-        input1.name = 'newMeditation'
+        input1.name = 'date'
+
+        input2.type = 'text'
+        input2.name = 'name'
 
         submitInput1.type = 'submit'
         submitInput1.value = "Add New Meditation"
 
-        meditationForm.append(label1, input1, submitInput1)
-        body.appendChild(listDiv)
+        meditationForm.append(label1, input1, label2, input2, submitInput1)
+        individualMed.appendChild(listDiv)
         listDiv.append(h2List, ulList, meditationForm)
 
         meditationForm.addEventListener('submit', (e) => {
             e.preventDefault()
-            postMeditation()
+            console.log('hi')
+            postMeditation(e, user)
         })
 
     
