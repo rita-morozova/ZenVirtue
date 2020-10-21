@@ -172,13 +172,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 
-    ///build Countdown Timer
     function buildMeditationList(user){       
         user.meditations.forEach(meditation => {
             let divMeditations = document.createElement('div')
             divMeditations.className = 'user-meditations-list'
             divMeditations.innerText = `${meditation.name}`
-            body.appendChild(divMeditations)
+            individualMed.appendChild(divMeditations)
         })
     }
 
@@ -234,8 +233,9 @@ document.addEventListener('DOMContentLoaded', function() {
         submitInput1.value = "Add New Meditation"
 
         meditationForm.append(label1, input1, submitInput1)
-        body.appendChild(listDiv)
+        
         listDiv.append(h2List, ulList, meditationForm)
+        individualMed.appendChild(listDiv)
     
     }
 
