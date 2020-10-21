@@ -35,9 +35,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // notes variables
     let notesForm = document.createElement('form')
+    let noteDateLabel = document.createElement('label')
+    let noteDateInput = document.createElement('input')
     let label = document.createElement('label')
     let input = document.createElement('input')
     let submitInput = document.createElement('input')
+    let notesUl = document.createElement('ul')
 
     //meditation list variables
     let listDiv = document.createElement('div')
@@ -124,38 +127,43 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch (error => error.message)
     }
 
-    // function postNotes(e, user){
-    //    console.log(e, user)
-    //     fetch(notesUrl, {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             'Accept': 'application/json'
-    //         },
-    //         body: JSON.stringify({description: e.target[0].value, })
+    function postNotes(e, user){
+        console.log(e.target.description.value)
+        let newNoteLi = document.createElement('li')
+        newNoteLi.innerText = `${e.target.date.value} - ${e.target.description.value}`
+        notesUl.appendChild(newNoteLi)
+
+        let meditation_id
+        user.meditations.forEach( meditation => {
+            meditation_id = meditation.id
+        })
+
+        const note = {
+            date: e.target.date.value,
+            description: e.target.description.value,
+            meditation_id: meditation_id
+        }
+        fetch(notesUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type' : 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(note)
+        })
+        .then(resp => resp.json())
+        .then(data => buildNotes(data))
+        .catch (error => error.message)
+    }
+
+    // function deleteNote(note) {
+    //     fetch(notesUrl + `/${note.id}`, {
+    //         method: 'DELETE'
     //     })
-    //     .then(resp => resp.json())
-    //     .then(console.log)
     // }
 
 
-
-    
-
-
-
-    
-
-
-
-   
-
-
-
-
-    // /////////////////////////
-
-    // // function
+    // function
     function buildUser() {
         nameForm.addEventListener('submit', (e) => {
             e.preventDefault()
@@ -164,30 +172,36 @@ document.addEventListener('DOMContentLoaded', function() {
             individualMed.hidden = false
             fetchWeather()
             getAllUsers(e)
-            buildMeditation(e)
+            buildMeditation()
         })
     }
 
-    function buildMeditation(user) {
-        label.htmlFor = 'description'
-        label.innerText = 'description:'
+    function buildMeditation() {
+        // label.htmlFor = 'description'
+        // label.innerText = 'Description'
+
+        // noteDateLabel.htmlFor = 'date'
+        // noteDateLabel.innerText = 'Date'
         
-        input.type = 'text'
-        input.name = 'description'
+        // input.type = 'text'
+        // input.name = 'description'
 
-        submitInput.type = 'submit'
-        submitInput.value = "Create Note"
+        // noteDateInput.type = 'text'
+        // noteDateInput.name = 'date'
+
+        // submitInput.type = 'submit'
+        // submitInput.value = "Add New Note"
 
 
-        notesForm.append(label, input, submitInput)
+        // notesForm.append(noteDateLabel, noteDateInput,label, input, submitInput)
 
-        notesForm.addEventListener('submit', (e)=>{
-            e.preventDefault()
-            postNotes(e, user)
-        })
+        // notesForm.addEventListener('submit', (e)=>{
+        //     e.preventDefault()
+        //     postNotes(e, user)
+        // })
 
         individualMed.appendChild(timeOptions)
-        individualMed.appendChild(notesForm)
+        // individualMed.appendChild(notesForm)
         
         fiveMinBtn.addEventListener('click', (e) => {
             e.preventDefault()
@@ -217,14 +231,40 @@ document.addEventListener('DOMContentLoaded', function() {
         user.notes.forEach(note => {
             let editButton = document.createElement('button')
             let deleteButton = document.createElement('button')
-            let divNotes = document.createElement('div')
-            divNotes.className = 'notes'
-            divNotes.innerText = `${note.date} -  ${note.description}`
+            let noteLi = document.createElement('li')
+            noteLi.className = 'notes'
+            noteLi.innerText = `${note.date} -  ${note.description}`
             editButton.innerText = 'Edit Note'
             deleteButton.innerText = 'Delete Note'
-            divNotes.append(editButton, deleteButton)
-            individualMed.appendChild(divNotes)
+            noteLi.append(editButton, deleteButton)
+            notesUl.appendChild(noteLi)
+            individualMed.appendChild(notesUl)
             // editButton.addEventListener('click', editNote(note, note.id))
+            // deleteButton.addEventListener('click', deleteNote(note))
+        })
+
+        label.htmlFor = 'description'
+        label.innerText = 'Description'
+
+        noteDateLabel.htmlFor = 'date'
+        noteDateLabel.innerText = 'Date'
+        
+        input.type = 'text'
+        input.name = 'description'
+
+        noteDateInput.type = 'text'
+        noteDateInput.name = 'date'
+
+        submitInput.type = 'submit'
+        submitInput.value = "Add New Note"
+
+
+        notesForm.append(noteDateLabel, noteDateInput,label, input, submitInput)
+        individualMed.appendChild(notesForm)
+
+        notesForm.addEventListener('submit', (e) => {
+            e.preventDefault()
+            postNotes(e, user)
         })
     }
 
