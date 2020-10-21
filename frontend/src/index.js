@@ -9,7 +9,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let body = document.querySelector('body')
 
     // Welcome HTML Variables
-    let welcomeForm = document.querySelector('.name-form')
+    let nameForm = document.querySelector('.name-form')
+    let welcomeFormDiv = document.querySelector('.welcome-form')
     let welcomeDiv = document.querySelector('.welcome')
 
     // Individual Meditation HTML Variables
@@ -40,6 +41,12 @@ document.addEventListener('DOMContentLoaded', function() {
     let audioUrl = 'https://audionautix.com/Music/RunningWaters.mp3'
     let audio1 = new Audio(audioUrl)
 
+    // Event listener
+    window.setTimeout(() => {
+        welcomeDiv.hidden = true
+        welcomeFormDiv.hidden = false
+    }, 2000)
+
     // call functions
     buildUser()
       
@@ -62,9 +69,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Functions
     function buildUser() {
-        welcomeForm.addEventListener('submit', (e) => {
+        nameForm.addEventListener('submit', (e) => {
             e.preventDefault()
-            welcomeDiv.hidden = true
+            welcomeFormDiv.hidden = true
             individualMed.hidden = false
             fetchWeather()
             getAllUsers(e)

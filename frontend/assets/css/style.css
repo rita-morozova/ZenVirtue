@@ -1,3 +1,4 @@
+
 ul {
     list-style-type: none;
 }
@@ -16,6 +17,22 @@ ul {
 #time-options button:hover {
     color: blue;
     background: white;
+}
+
+.center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.titleMain {
+    letter-spacing: 20px;
+}
+
+.bigHeading {
+    margin: 0px;
+    font-size: clamp(40px, 8vw, 80px);
 }
 
 /* .weather-icon {
