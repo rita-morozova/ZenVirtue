@@ -22,6 +22,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let h1Weather = document.createElement('h1')
     let weatherDesc = document.createElement('h2')
     let weatherImg = document.createElement('img')   
+  
+    
 
     // timer variables
     let timer = document.createElement('h2')
@@ -32,6 +34,16 @@ document.addEventListener('DOMContentLoaded', function() {
     let label = document.createElement('label')
     let input = document.createElement('input')
     let submitInput = document.createElement('input')
+
+    //meditation list variables
+    let listDiv = document.createElement('div')
+    let ulList = document.createElement('ul')
+    let h2List = document.createElement('h2')
+    let meditationForm = document.createElement('form')
+    let label1 = document.createElement('label')
+    let input1 = document.createElement('input')
+    let submitInput1 = document.createElement('input')
+   
 
    
 
@@ -56,10 +68,12 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(resp => resp.json())
         .then (users => users.forEach(user => {if(user.name == e.target.name.value){
             buildNotes(user)
-            // buildMeditationList(user)
+            meditationList(user)
         }
         }))
     }
+
+    ///Create New User if Not Exist
 
     function postUser(e){
         e.preventDefault()
@@ -80,6 +94,20 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch (error => error.message)
     }
 
+    // function postNotes(e, user){
+    //    console.log(e, user)
+    //     fetch(notesUrl, {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'Accept': 'application/json'
+    //         },
+    //         body: JSON.stringify({description: e.target[0].value, })
+    //     })
+    //     .then(resp => resp.json())
+    //     .then(console.log)
+    // }
+
 
 
     
@@ -93,19 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // }
 
     
-    // function postNotes(e, user){
-    //    console.log(e, user)
-    //     fetch(notesUrl, {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             'Accept': 'application/json'
-    //         },
-    //         body: JSON.stringify({description: e.target[0].value})
-    //     })
-    //     .then(resp => resp.json())
-    //     .then(console.log)
-    // }
+    
 
 
 
@@ -275,9 +291,48 @@ document.addEventListener('DOMContentLoaded', function() {
         div.appendChild(divWeather)
         divWeather.append(h1Weather, weatherDesc, weatherImg)
         weatherImg.className = 'weather-icon'
-        h1Weather.innerHTML = data.main.temp
+        h1Weather.innerHTML = Math.ceil(data.main.temp) + '°F'
         weatherDesc.innerHTML=data.weather[0].description
-        weatherImg.src = data.weather[0].icon
+        weatherImg.src = "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png"
+        
+    }
+
+    function meditationList(user){
+        user.meditations.forEach(meditation => {
+            let editMedBtn = document.createElement('button')
+            let deleteMedBtn = document.createElement('button')
+            let liList = document.createElement('li')
+            ulList.appendChild(liList)
+            liList.textContent = meditation.date
+            liList.appendChild(editMedBtn)
+            editMedBtn.innerText = 'Edit'
+            liList.appendChild(deleteMedBtn)
+            deleteMedBtn.innerText = 'X'
+           
+           
+        })
+        body.appendChild(listDiv)
+        listDiv.className = 'meditation-list'
+        h2List.textContent = "My Meditations"
+
+        label1.htmlFor = 'addNewMeditation'
+        label1.innerText = 'Add New Meditation'
+        
+        input1.type = 'text'
+        input1.name = 'newMeditation'
+
+        submitInput1.type = 'submit'
+        submitInput1.value = "Add New Meditation"
+
+
+        meditationForm.append(label1, input1, submitInput1)
+
+        listDiv.append(h2List, ulList, meditationForm)
+
+       
+
+       
+
         
     }
 

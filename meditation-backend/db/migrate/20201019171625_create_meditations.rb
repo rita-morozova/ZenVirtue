@@ -1,7 +1,7 @@
 class CreateMeditations < ActiveRecord::Migration[6.0]
   def change
     create_table :meditations do |t|
-      t.string :name
+      t.string :date
       t.belongs_to :user, null: false, foreign_key: true
 
       t.timestamps

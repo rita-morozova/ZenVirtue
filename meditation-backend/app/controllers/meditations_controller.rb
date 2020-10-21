@@ -1,19 +1,19 @@
 class MeditationsController < ApplicationController
 
   def index
-    meditation = Meditation.all 
-    render json: meditation
+    meditations = Meditation.all 
+    render json: meditations
   end
 
   def create
-    meditation = Meditation.create(name: params[:name], user_id: params[:user_id])
+    meditation = Meditation.create(date: params[:date], user_id: params[:user_id])
     render json: meditation
   end
 
   def destroy
     meditation = Meditation.find_by(id: params[:id])
     meditation.destroy
-    render json: {"Message": "Session was deleted"}
+    render json: {"Message": "Meditation was deleted"}
   end
 
 end
