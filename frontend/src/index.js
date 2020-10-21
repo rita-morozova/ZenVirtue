@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let welcomeFormDiv = document.querySelector('.welcome-form')
     let welcomeDiv = document.querySelector('.welcome')
 
-    // Individual Meditation HTML Variables
+    // Container HTML Variables
     let container = document.querySelector('.container')
 
     // Time HTML Variables
@@ -236,7 +236,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 notesForm.append(noteDateLabel, noteDateInput,label, input, submitInput)
                 notesContainer.appendChild(notesForm)
 
-                // editButton.addEventListener('click', editNote(note, note.id))
+            
 
                 deleteButton.addEventListener('click', () => deleteNote(note, noteLi))
 
