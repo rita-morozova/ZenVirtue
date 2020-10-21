@@ -107,6 +107,11 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch (error => error.message)
     }
 
+
+    function postMeditation(){
+        
+    }
+
     // function postNotes(e, user){
     //    console.log(e, user)
     //     fetch(notesUrl, {
@@ -284,6 +289,11 @@ document.addEventListener('DOMContentLoaded', function() {
         meditationForm.append(label1, input1, submitInput1)
 
         listDiv.append(h2List, ulList, meditationForm)
+
+        meditationForm.addEventListener('submit', (e) => {
+            e.preventDefault()
+            postMeditation()
+        })
 
     
     }
