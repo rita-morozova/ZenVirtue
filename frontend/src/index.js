@@ -8,13 +8,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Main Html Variables
     let body = document.querySelector('body')
 
-    // weather variables
-    let divWeather = document.createElement('div')
-    let h1Weather = document.createElement('h1')
-    let weatherDesc = document.createElement('h2')
-    let weatherImg = document.createElement('img')   
-  
-    
     // Welcome HTML Variables
     let nameForm = document.querySelector('.name-form')
     let welcomeFormDiv = document.querySelector('.welcome-form')
@@ -31,8 +24,10 @@ document.addEventListener('DOMContentLoaded', function() {
     let twentyMinBtn = document.querySelector('.twentyMinBtn')
 
     // Weather HTML variables
+    let weather = document.querySelector('#weather')
     let weatherTemp = document.querySelector('#weather-temp')
     let weatherDesc = document.querySelector('#weather-desc')
+    let weatherImg = document.createElement('img')
 
     // Timer HTML Variables
     let timer = document.createElement('h2')
@@ -53,9 +48,6 @@ document.addEventListener('DOMContentLoaded', function() {
     let input1 = document.createElement('input')
     let submitInput1 = document.createElement('input')
    
-
-   
-
     // Audio
     let audioUrl = 'https://audionautix.com/Music/RunningWaters.mp3'
     let audio1 = new Audio(audioUrl)
@@ -87,7 +79,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     ///Create New User if Not Exist
-
     function postUser(e){
         e.preventDefault()
 
@@ -107,43 +98,11 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch (error => error.message)
     }
 
-    // function postNotes(e, user){
-    //    console.log(e, user)
-    //     fetch(notesUrl, {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             'Accept': 'application/json'
-    //         },
-    //         body: JSON.stringify({description: e.target[0].value, })
-    //     })
-    //     .then(resp => resp.json())
-    //     .then(console.log)
-    // }
-
-
-
-    
-
-
-
-    
-
-
-
-   
-
-
-
-
-    // /////////////////////////
-
-    // // function
+    // function
     function buildUser() {
         nameForm.addEventListener('submit', (e) => {
             e.preventDefault()
             postUser(e)
-            mainDiv.innerHTML = ''
             welcomeFormDiv.hidden = true
             individualMed.hidden = false
             fetchWeather()
@@ -239,18 +198,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function buildWeather(data){
-        divWeather.className ='weather'
-        h1Weather.innerHTML = data.main.temp
-        div.appendChild(divWeather)
-        divWeather.append(h1Weather, weatherDesc, weatherImg)
         weatherImg.className = 'weather-icon'
-        h1Weather.innerHTML = Math.ceil(data.main.temp) + '°F'
-        weatherDesc.innerHTML=data.weather[0].description
         weatherImg.src = "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png"
-
-        weatherTemp.innerText = data.main.temp
+        weatherTemp.innerText = Math.ceil(data.main.temp) + '°F'
         weatherDesc.innerHTML=data.weather[0].description 
-        
+
+        weather.append(weatherImg)
     }
 
     function meditationList(user){
@@ -267,7 +220,7 @@ document.addEventListener('DOMContentLoaded', function() {
            
            
         })
-        body.appendChild(listDiv)
+        
         listDiv.className = 'meditation-list'
         h2List.textContent = "My Meditations"
 
@@ -280,11 +233,9 @@ document.addEventListener('DOMContentLoaded', function() {
         submitInput1.type = 'submit'
         submitInput1.value = "Add New Meditation"
 
-
         meditationForm.append(label1, input1, submitInput1)
-
+        body.appendChild(listDiv)
         listDiv.append(h2List, ulList, meditationForm)
-
     
     }
 
