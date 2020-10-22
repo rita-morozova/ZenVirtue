@@ -54,6 +54,15 @@ document.addEventListener('DOMContentLoaded', function() {
     let audioUrl = 'https://audionautix.com/Music/RunningWaters.mp3'
     let audio1 = new Audio(audioUrl)
 
+    //Quotes variables
+    let randomQuote = document.querySelector('#random-quote')
+    let quoteDiv = document.createElement('div')
+    let quoteh2 = document.createElement('h2')
+    let quotesArray = ["The secret of getting ahead is getting started.", "The best time to plant a tree was 20 years ago. The second best time is now.", "If people are doubting how far you can go, go so far that you can’t hear them anymore.", 'Your limitation—it’s only your imagination.',  'Push yourself, because no one else is going to do it for you.', 'Sometimes later becomes never. Do it now.', ' Great things never come from comfort zones.', 'Dream it. Wish it. Do it.', 'Success doesn’t just find you. You have to go out and get it.', 'The harder you work for something, the greater you’ll feel when you achieve it.', 'Dream bigger. Do bigger.', 'Don’t stop when you’re tired. Stop when you’re done.', 'Wake up with determination. Go to bed with satisfaction.', 'Do something today that your future self will thank you for.', 'Little things make big days.', 'It’s going to be hard, but hard does not mean impossible.', ' Don’t wait for opportunity. Create it.', 'Sometimes we’re tested not to show our weaknesses, but to discover our strengths.', 'The key to success is to focus on goals, not obstacles.', 'Dream it. Believe it. Build it.']
+    let quoteBtn = document.querySelector('#getquotes')
+    quoteBtn.addEventListener('click', () => loadQuotes())
+
+
     // Event listener
     window.setTimeout(() => {
         welcomeDiv.hidden = true
@@ -395,7 +404,20 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault()
             patchMeditation(e, user)
         })
-
     }
+
+    function loadQuotes(){
+        quoteDiv.className = 'quote-div'
+        randomQuote.append(quoteDiv)
+        quoteDiv.append(quoteh2)
+       
+
+        for(i =0; i< quotesArray.length; i++){
+            let newQuote =quotesArray[Math.floor(Math.random() * quotesArray.length)]
+            quoteh2.innerText = newQuote
+        }
+    }
+
+
 
 })
