@@ -77,6 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
         fetch(weatherUrl)
         .then(resp => resp.json())
         .then(data => buildWeather(data))
+        .catch (error => error.message)
     }
 
     function getAllUsers(e){
@@ -84,15 +85,24 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(resp => resp.json())
         .then (users => users.forEach(user => {if(user.name == e.target.name.value){
             getAllNotes(user)
-            meditationList(user)
+            getAllMeditations(user)
         }
         }))
+        .catch (error => error.message)
     }
 
     function getAllNotes(user) {
         fetch(notesUrl)
         .then(resp => resp.json())
         .then(notes => notes.forEach(note => notesList(note, user)))
+        .catch (error => error.message)
+    }
+
+    function getAllMeditations(user) {
+        fetch(meditationUrl)
+        .then(resp => resp.json())
+        .then(meditations => meditations.forEach( meditation => buildMed(meditation, user)))
+        .catch (error => error.message)
     }
 
     function getAllMeditations(user) {
@@ -169,6 +179,50 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch (error => error.message)
     }
 
+    function patchNote(updatedDescription, note, user) {
+        const noteData = {
+            description: updatedDescription
+        }
+        fetch(notesUrl + `/${note.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type' : 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(noteData)
+        })
+        .then(resp => resp.json())
+        .then(data => notesList(data, user))
+        .catch (error => error.message)
+    }
+
+    function patchNoteHelper(note, user) {
+        let editForm = document.createElement('form')
+        let editLabel = document.createElement('label')
+        let editInput = document.createElement('input')
+        let editSubmit = document.createElement('button')
+
+        editLabel.htmlFor = 'description'
+        editLabel.name = 'description'
+
+        editInput.type = 'text'
+        editInput.name = 'description'
+        editInput.placeholder = note.description
+
+        editSubmit.type = 'submit'
+        editSubmit.innerText = 'Update Note'
+
+        editForm.append(editLabel, editInput, editSubmit)
+        notesContainer.appendChild(editForm)
+
+        editForm.addEventListener('submit', (e) => {
+            e.preventDefault()
+            let updatedDescription = e.target.description.value
+            patchNote(updatedDescription, note, user)
+            editForm.hidden = true
+        })
+    }
+
     function deleteNote(note, notesLi) {
         fetch(notesUrl + `/${note.id}`, {
             method: 'DELETE'
@@ -177,6 +231,19 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(() => {
             notesLi.remove()
         })
+        .catch (error => error.message)
+    }
+
+    function deleteMeditation(meditation, liList) {
+        fetch(meditationUrl + `/${meditation.id}`, {
+            method: 'DELETE'
+        })
+        .then(resp => resp.json())
+        .then(() => {
+            liList.remove()
+            console.log('done')
+        })
+        .catch (error => error.message)
     }
 
     function deleteMeditation(meditation) {
@@ -284,8 +351,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 notesForm.append(noteDateLabel, noteDateInput,label, input, submitInput)
                 notesContainer.appendChild(notesForm)
 
-            
-
+                editButton.addEventListener('click', () => patchNoteHelper(note, user))
                 deleteButton.addEventListener('click', () => deleteNote(note, noteLi))
 
                 notesForm.addEventListener('submit', (e) => {
@@ -351,29 +417,25 @@ document.addEventListener('DOMContentLoaded', function() {
             deleteMedBtn.addEventListener('click', () => deleteMeditation(meditation))
             editMedBtn.addEventListener('click', () => {
                 editMeditationEntry(meditation, user, liList)
+                })
             })
-        })
 
-        label1.htmlFor = 'addNewMeditationDate'
-        label1.innerText = 'Date'
+            input2.type = 'text'
+            input2.name = 'name'
 
-        label2.htmlFor = 'addNewMeditationName'
-        label2.innerText = 'Name'
-        
-        input1.type = 'text'
-        input1.name = 'date'
+            submitInput1.type = 'submit'
+            submitInput1.value = "Add New Meditation"
 
-        input2.type = 'text'
-        input2.name = 'name'
+            liList.appendChild(deleteMedBtn)
+            meditationUl.appendChild(liList)
 
-        submitInput1.type = 'submit'
-        submitInput1.value = "Add New Meditation"
+            meditationForm.append(label1, input1, label2, input2, submitInput1)
+            meditations.append(meditationForm)
+            // container.appendChild(meditations)
 
-        meditationForm.append(label1, input1, label2, input2, submitInput1)
-        meditations.append(meditationForm)
-        // container.appendChild(meditations)
+            deleteMedBtn.addEventListener('click', () => deleteMeditation(meditation, liList))
 
-        meditationForm.addEventListener('submit', (e) => {
+            meditationForm.addEventListener('submit', (e) => {
             e.preventDefault()
             postMeditation(e, user)
         })
