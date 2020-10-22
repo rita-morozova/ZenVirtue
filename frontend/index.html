@@ -9,12 +9,12 @@
         <link rel="stylesheet" href="assets/css/style.css">
     </head>
     <body>
-        <div class="welcome center">
+        <div class="welcome center" id="welcome-container">
             <p>Welcome to</p>
             <h1 class="titleMain bigHeading">ZenVirtue</h1>
         </div>
         <div class="welcome-form center" hidden=''>
-            <form class="name-form">
+            <form class="name-form" id="login-container">
                 <h3>Please Enter Name and Email to Continue</h3>
                 <label for="name">Name:</label>
                 <input type="text" name="name">
@@ -32,6 +32,7 @@
                 <h1 id='weather-temp'></h1>
                 <h2 id='weather-desc'></h2>
             </div>
+            
             <div id="time-options">
                 <button class='fiveMinBtn' data-time="300">5 min</button>
                 <button class='tenMinBtn' data-time="600">10 min</button>

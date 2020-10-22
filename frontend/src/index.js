@@ -319,6 +319,16 @@ document.addEventListener('DOMContentLoaded', function() {
         weatherDesc.innerHTML=data.weather[0].description 
 
         weather.append(weatherImg)
+
+        let badWeatherArray = ['clouds', 'rain', 'snow', 'thunderstorm', 'drizzle', 'fog', 'mist']
+        let checkAgainst = data.weather[0].description.split(' ')
+        let result = badWeatherArray.some(r => checkAgainst.includes(r))
+        console.log(result)
+        // if (result == true){
+        //     play cheerful music 
+        // }else{
+        //     play rain 
+        // }
     }
 
     function meditationList(user){
@@ -417,6 +427,8 @@ document.addEventListener('DOMContentLoaded', function() {
             quoteh2.innerText = newQuote
         }
     }
+
+    
 
 
 

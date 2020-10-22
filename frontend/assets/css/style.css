@@ -1,3 +1,25 @@
+body {
+    background: url('images/background.jpg');
+    background-size: cover;
+  
+}
+
+#welcome-container, #login-container {
+        width: 440px;  
+        overflow: hidden;  
+        margin: auto;  
+        margin: 20 0 0 450px;  
+        padding: 80px;  
+        background: #f0f4fa;  
+        opacity: 0.7; 
+        border-radius: 15px ; 
+        
+}
+
+
+
+
+
 ul {
     list-style-type: none;
 }
@@ -33,6 +55,8 @@ ul {
     margin: 0px;
     font-size: clamp(40px, 8vw, 80px);
 }
+
+
 
 /* .weather-icon {
     width: 48px;
