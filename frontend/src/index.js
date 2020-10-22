@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let weatherTemp = document.querySelector('#weather-temp')
     let weatherDesc = document.querySelector('#weather-desc')
     let weatherImg = document.createElement('img')
+   
 
     // Timer HTML Variables
     let timer = document.createElement('h2')
