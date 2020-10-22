@@ -190,10 +190,9 @@ document.addEventListener('DOMContentLoaded', function() {
         })
     }
 
-    function patchMeditation(e, meditation){
-        // let editedLi = document.createElement('li')
-        // editedLi.textContent = `${e.target.date.value} - ${e.target.name.value}`
-        // meditationUl.appendChild(editedLi)
+    function patchMeditation(e, meditation, user, liList){
+        
+       liList.innerText= `${e.target.date.value} - ${e.target.name.value}`
         const meditationPatched = {
             date: e.target.date.value,
             name: e.target.name.value
@@ -208,7 +207,7 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(resp => resp.json())
         .then(data => {
-            meditationList(meditation.user_id)
+           meditationList(user.id)
         })
         .catch (error => error.message)
     }
@@ -351,7 +350,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             deleteMedBtn.addEventListener('click', () => deleteMeditation(meditation))
             editMedBtn.addEventListener('click', () => {
-                editMeditationEntry(meditation)
+                editMeditationEntry(meditation, user, liList)
             })
         })
 
@@ -380,7 +379,7 @@ document.addEventListener('DOMContentLoaded', function() {
         })
     }
 
-    function editMeditationEntry(user){
+    function editMeditationEntry(meditation, user, liList){
         let divEditMed = document.createElement('div')
         divEditMed.getElementsByClassName = 'edit-meditation'
         meditations.appendChild(divEditMed)
@@ -413,7 +412,7 @@ document.addEventListener('DOMContentLoaded', function() {
         meditationEditForm.addEventListener('submit', (e) => {
             console.log('hi')
             e.preventDefault()
-            patchMeditation(e, user)
+            patchMeditation(e, meditation, user, liList)
         })
     }
 
