@@ -76,6 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .then (users => users.forEach(user => {if(user.name == e.target.name.value){
             getAllNotes(user)
             meditationList(user)
+            getAllMeditations(user)
         }
         }))
     }
@@ -84,6 +85,12 @@ document.addEventListener('DOMContentLoaded', function() {
         fetch(notesUrl)
         .then(resp => resp.json())
         .then(notes => notes.forEach(note => notesList(note, user)))
+    }
+
+    function getAllMeditations(user) {
+        fetch(meditationUrl)
+        .then(resp => resp.json())
+        .then(meditations => meditations.forEach( meditation => buildMed(meditation, user)))
     }
 
     ///Create New User if Not Exist
@@ -126,7 +133,7 @@ document.addEventListener('DOMContentLoaded', function() {
             body: JSON.stringify(meditation)
         })
         .then(resp => resp.json())
-        .then(data => meditationList(data))
+        .then(meditation => buildMed(meditation, user))
         .catch (error => error.message)
     }
 
@@ -161,6 +168,17 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(resp => resp.json())
         .then(() => {
             notesLi.remove()
+        })
+    }
+
+    function deleteMeditation(meditation, liList) {
+        fetch(meditationUrl + `/${meditation.id}`, {
+            method: 'DELETE'
+        })
+        .then(resp => resp.json())
+        .then(() => {
+            liList.remove()
+            console.log('done')
         })
     }
 
@@ -274,46 +292,92 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function meditationList(user){
-        user.meditations.forEach(meditation => {
-            let editMedBtn = document.createElement('button')
-            let deleteMedBtn = document.createElement('button')
-            let liList = document.createElement('li')
+        console.log('hi')
+        // user.meditations.forEach(meditation => {
+        //     let editMedBtn = document.createElement('button')
+        //     let deleteMedBtn = document.createElement('button')
+        //     let liList = document.createElement('li')
             
-            liList.textContent = `${meditation.date} - ${meditation.name}`
-            editMedBtn.innerText = 'Edit'
-            deleteMedBtn.innerText = 'X'  
+        //     liList.textContent = `${meditation.date} - ${meditation.name}`
+        //     editMedBtn.innerText = 'Edit'
+        //     deleteMedBtn.innerText = 'X'  
 
-            liList.appendChild(deleteMedBtn)
-            meditationUl.appendChild(liList)
+        //     liList.appendChild(deleteMedBtn)
+        //     meditationUl.appendChild(liList)
             
-        })
+        // })
 
-        label1.htmlFor = 'addNewMeditationDate'
-        label1.innerText = 'Date'
+        // label1.htmlFor = 'addNewMeditationDate'
+        // label1.innerText = 'Date'
 
-        label2.htmlFor = 'addNewMeditationName'
-        label2.innerText = 'Name'
+        // label2.htmlFor = 'addNewMeditationName'
+        // label2.innerText = 'Name'
         
-        input1.type = 'text'
-        input1.name = 'date'
+        // input1.type = 'text'
+        // input1.name = 'date'
 
-        input2.type = 'text'
-        input2.name = 'name'
+        // input2.type = 'text'
+        // input2.name = 'name'
 
-        submitInput1.type = 'submit'
-        submitInput1.value = "Add New Meditation"
+        // submitInput1.type = 'submit'
+        // submitInput1.value = "Add New Meditation"
 
-        meditationForm.append(label1, input1, label2, input2, submitInput1)
-        meditations.append(meditationForm)
-        // container.appendChild(meditations)
+        // meditationForm.append(label1, input1, label2, input2, submitInput1)
+        // meditations.append(meditationForm)
+        // // container.appendChild(meditations)
 
-        meditationForm.addEventListener('submit', (e) => {
-            e.preventDefault()
-            console.log('hi')
-            postMeditation(e, user)
-        })
+        // meditationForm.addEventListener('submit', (e) => {
+        //     e.preventDefault()
+        //     console.log('hi')
+        //     postMeditation(e, user)
+        // })
 
     
+    }
+
+    function buildMed(meditation, user) {
+        user.meditations.forEach( med => {
+            if (med.id == meditation.id) {
+                console.log(meditation)
+                let editMedBtn = document.createElement('button')
+                let deleteMedBtn = document.createElement('button')
+                let liList = document.createElement('li')
+                
+                liList.textContent = `${meditation.date} - ${meditation.name}`
+                editMedBtn.innerText = 'Edit'
+                deleteMedBtn.innerText = 'X'  
+
+                label1.htmlFor = 'addNewMeditationDate'
+                label1.innerText = 'Date'
+
+                label2.htmlFor = 'addNewMeditationName'
+                label2.innerText = 'Name'
+                
+                input1.type = 'text'
+                input1.name = 'date'
+
+                input2.type = 'text'
+                input2.name = 'name'
+
+                submitInput1.type = 'submit'
+                submitInput1.value = "Add New Meditation"
+
+                liList.appendChild(deleteMedBtn)
+                meditationUl.appendChild(liList)
+
+                meditationForm.append(label1, input1, label2, input2, submitInput1)
+                meditations.append(meditationForm)
+                // container.appendChild(meditations)
+
+                deleteMedBtn.addEventListener('click', () => deleteMeditation(meditation, liList))
+
+                meditationForm.addEventListener('submit', (e) => {
+                    e.preventDefault()
+                    console.log('hi')
+                    postMeditation(e, user)
+                })
+            }
+        })
     }
 
 })
