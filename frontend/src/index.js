@@ -85,7 +85,8 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(resp => resp.json())
         .then (users => users.forEach(user => {if(user.name == e.target.name.value){
             getAllNotes(user)
-            getAllMeditations(user)
+            meditationList(user)
+            // getAllMeditations(user)
         }
         }))
         .catch (error => error.message)
@@ -95,13 +96,6 @@ document.addEventListener('DOMContentLoaded', function() {
         fetch(notesUrl)
         .then(resp => resp.json())
         .then(notes => notes.forEach(note => notesList(note, user)))
-        .catch (error => error.message)
-    }
-
-    function getAllMeditations(user) {
-        fetch(meditationUrl)
-        .then(resp => resp.json())
-        .then(meditations => meditations.forEach( meditation => buildMed(meditation, user)))
         .catch (error => error.message)
     }
 
@@ -244,17 +238,6 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('done')
         })
         .catch (error => error.message)
-    }
-
-    function deleteMeditation(meditation) {
-        fetch(meditationUrl + `/${meditation.id}`, {
-            method: 'DELETE'
-        })
-        .then(resp => resp.json())
-        .then(() => {
-           let deleteLi = document.querySelector('.button-delete-meditation')
-           deleteLi.parentNode.remove()
-        })
     }
 
     function patchMeditation(e, meditation, user, liList){
@@ -414,28 +397,31 @@ document.addEventListener('DOMContentLoaded', function() {
             liList.append(editMedBtn, deleteMedBtn)
             meditationUl.appendChild(liList)
 
-            deleteMedBtn.addEventListener('click', () => deleteMeditation(meditation))
+            deleteMedBtn.addEventListener('click', () => deleteMeditation(meditation, liList))
             editMedBtn.addEventListener('click', () => {
                 editMeditationEntry(meditation, user, liList)
-                })
             })
+        })
 
-            input2.type = 'text'
-            input2.name = 'name'
+        label1.htmlFor = 'addNewMeditationDate'
+        label1.innerText = 'Date'
 
-            submitInput1.type = 'submit'
-            submitInput1.value = "Add New Meditation"
+        label2.htmlFor = 'addNewMeditationName'
+        label2.innerText = 'Name'
 
-            liList.appendChild(deleteMedBtn)
-            meditationUl.appendChild(liList)
+        input1.type = 'text'
+        input1.name = 'date'
 
-            meditationForm.append(label1, input1, label2, input2, submitInput1)
-            meditations.append(meditationForm)
-            // container.appendChild(meditations)
+        input2.type = 'text'
+        input2.name = 'name'
 
-            deleteMedBtn.addEventListener('click', () => deleteMeditation(meditation, liList))
+        submitInput1.type = 'submit'
+        submitInput1.value = "Add New Meditation"
 
-            meditationForm.addEventListener('submit', (e) => {
+        meditationForm.append(label1, input1, label2, input2, submitInput1)
+        meditations.append(meditationForm)
+
+        meditationForm.addEventListener('submit', (e) => {
             e.preventDefault()
             postMeditation(e, user)
         })
