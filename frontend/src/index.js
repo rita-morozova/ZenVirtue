@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch (error => error.message)
     }
 
-    function patchNote(updatedDescription, note) {
+    function patchNote(updatedDescription, note, user) {
         const noteData = {
             description: updatedDescription
         }
@@ -177,12 +177,11 @@ document.addEventListener('DOMContentLoaded', function() {
             body: JSON.stringify(noteData)
         })
         .then(resp => resp.json())
-        .then(note => notesList(note, user))
+        .then(data => notesList(data, user))
         .catch (error => error.message)
-
     }
 
-    function patchNoteHelper(note) {
+    function patchNoteHelper(note, user) {
         let editForm = document.createElement('form')
         let editLabel = document.createElement('label')
         let editInput = document.createElement('input')
@@ -204,7 +203,7 @@ document.addEventListener('DOMContentLoaded', function() {
         editForm.addEventListener('submit', (e) => {
             e.preventDefault()
             let updatedDescription = e.target.description.value
-            patchNote(updatedDescription, note, noteLi)
+            patchNote(updatedDescription, note, user)
             editForm.hidden = true
         })
     }
@@ -304,7 +303,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 notesForm.append(noteDateLabel, noteDateInput,label, input, submitInput)
                 notesContainer.appendChild(notesForm)
 
-                editButton.addEventListener('click', () => patchNoteHelper(note, noteLi))
+                editButton.addEventListener('click', () => patchNoteHelper(note, user))
                 deleteButton.addEventListener('click', () => deleteNote(note, noteLi))
 
                 notesForm.addEventListener('submit', (e) => {
