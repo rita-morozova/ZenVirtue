@@ -86,6 +86,12 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(notes => notes.forEach(note => notesList(note, user)))
     }
 
+    function getAllMeditations(user) {
+        fetch(meditationUrl)
+        .then(resp => resp.json())
+        .then(meditations => meditations.forEach(meditation => meditationList(meditation, user)))
+    }
+
     ///Create New User if Not Exist
     function postUser(e){
         e.preventDefault()
@@ -126,7 +132,7 @@ document.addEventListener('DOMContentLoaded', function() {
             body: JSON.stringify(meditation)
         })
         .then(resp => resp.json())
-        .then(data => meditationList(data))
+        .then(data=> meditationList(data))
         .catch (error => error.message)
     }
 
@@ -162,6 +168,39 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(() => {
             notesLi.remove()
         })
+    }
+
+    function deleteMeditation(meditation) {
+        fetch(meditationUrl + `/${meditation.id}`, {
+            method: 'DELETE'
+        })
+        .then(resp => resp.json())
+        .then(() => {
+           let deleteLi = document.querySelector('.button-delete-meditation')
+           deleteLi.parentNode.remove()
+        })
+    }
+
+    function patchMeditation(e, meditation){
+        // let editedLi = document.createElement('li')
+        // editedLi.textContent = `${e.target.date.value} - ${e.target.name.value}`
+        // meditationUl.appendChild(editedLi)
+      
+        const meditationPatched = {
+            date: e.target.date.value,
+            name: e.target.name.value
+        }
+        fetch(meditationUrl + `/${meditation.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type' : 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(meditationPatched)
+        })
+        .then(resp => resp.json())
+        .then(data => buildUser(data))
+        .catch (error => error.message)
     }
 
     // function
@@ -278,14 +317,22 @@ document.addEventListener('DOMContentLoaded', function() {
             let editMedBtn = document.createElement('button')
             let deleteMedBtn = document.createElement('button')
             let liList = document.createElement('li')
+
+            deleteMedBtn.className ='button-delete-meditation'
+            editMedBtn.className = 'button-edit-meditation'
             
+            liList.className ='user-meditations'
             liList.textContent = `${meditation.date} - ${meditation.name}`
             editMedBtn.innerText = 'Edit'
             deleteMedBtn.innerText = 'X'  
 
-            liList.appendChild(deleteMedBtn)
+            liList.append(editMedBtn, deleteMedBtn)
             meditationUl.appendChild(liList)
-            
+
+            deleteMedBtn.addEventListener('click', () => deleteMeditation(meditation))
+            editMedBtn.addEventListener('click', () => {
+                editMeditationEntry(meditation)
+            })
         })
 
         label1.htmlFor = 'addNewMeditationDate'
@@ -309,11 +356,46 @@ document.addEventListener('DOMContentLoaded', function() {
 
         meditationForm.addEventListener('submit', (e) => {
             e.preventDefault()
+            postMeditation(e, meditation)
+        })
+    }
+
+    function editMeditationEntry(user){
+        let divEditMed = document.createElement('div')
+        divEditMed.getElementsByClassName = 'edit-meditation'
+        meditations.appendChild(divEditMed)
+
+        let meditationEditForm = document.createElement('form')
+        let editLabel = document.createElement('label')
+        let editLabel1 = document.createElement('label')
+        let editInput = document.createElement('input')
+        let editInput1 = document.createElement('input')
+        let submitEditInput = document.createElement('input')
+
+        divEditMed.append(meditationEditForm)
+        meditationEditForm.append(editLabel, editInput, editLabel1, editInput1, submitEditInput)
+
+        editLabel.htmlFor = 'editNewMeditationDate'
+        editLabel.innerText = 'Date'
+
+        editLabel1.htmlFor = 'editNewMeditationName'
+        editLabel1.innerText = 'Name'
+        
+        editInput.type = 'text'
+        editInput.name = 'date'
+
+        editInput1.type = 'text'
+        editInput1.name = 'name'
+
+        submitEditInput.type = 'submit'
+        submitEditInput.value = "Edit"
+
+        meditationEditForm.addEventListener('submit', (e) => {
             console.log('hi')
-            postMeditation(e, user)
+            e.preventDefault()
+            patchMeditation(e, user)
         })
 
-    
     }
 
 })
