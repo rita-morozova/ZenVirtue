@@ -194,7 +194,6 @@ document.addEventListener('DOMContentLoaded', function() {
         // let editedLi = document.createElement('li')
         // editedLi.textContent = `${e.target.date.value} - ${e.target.name.value}`
         // meditationUl.appendChild(editedLi)
-      
         const meditationPatched = {
             date: e.target.date.value,
             name: e.target.name.value
@@ -208,7 +207,9 @@ document.addEventListener('DOMContentLoaded', function() {
             body: JSON.stringify(meditationPatched)
         })
         .then(resp => resp.json())
-        .then(data => buildUser(data))
+        .then(data => {
+            meditationList(meditation.user_id)
+        })
         .catch (error => error.message)
     }
 
@@ -375,7 +376,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         meditationForm.addEventListener('submit', (e) => {
             e.preventDefault()
-            postMeditation(e, meditation)
+            postMeditation(e, user)
         })
     }
 
