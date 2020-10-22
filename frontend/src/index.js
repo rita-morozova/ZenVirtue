@@ -68,6 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
         fetch(weatherUrl)
         .then(resp => resp.json())
         .then(data => buildWeather(data))
+        .catch (error => error.message)
     }
 
     function getAllUsers(e){
@@ -75,22 +76,24 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(resp => resp.json())
         .then (users => users.forEach(user => {if(user.name == e.target.name.value){
             getAllNotes(user)
-            meditationList(user)
             getAllMeditations(user)
         }
         }))
+        .catch (error => error.message)
     }
 
     function getAllNotes(user) {
         fetch(notesUrl)
         .then(resp => resp.json())
         .then(notes => notes.forEach(note => notesList(note, user)))
+        .catch (error => error.message)
     }
 
     function getAllMeditations(user) {
         fetch(meditationUrl)
         .then(resp => resp.json())
         .then(meditations => meditations.forEach( meditation => buildMed(meditation, user)))
+        .catch (error => error.message)
     }
 
     ///Create New User if Not Exist
@@ -161,6 +164,51 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch (error => error.message)
     }
 
+    function patchNote(updatedDescription, note) {
+        const noteData = {
+            description: updatedDescription
+        }
+        fetch(notesUrl + `/${note.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type' : 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(noteData)
+        })
+        .then(resp => resp.json())
+        .then(note => notesList(note, user))
+        .catch (error => error.message)
+
+    }
+
+    function patchNoteHelper(note) {
+        let editForm = document.createElement('form')
+        let editLabel = document.createElement('label')
+        let editInput = document.createElement('input')
+        let editSubmit = document.createElement('button')
+
+        editLabel.htmlFor = 'description'
+        editLabel.name = 'description'
+
+        editInput.type = 'text'
+        editInput.name = 'description'
+        editInput.placeholder = note.description
+
+        editSubmit.type = 'submit'
+        editSubmit.innerText = 'Update Note'
+
+        editForm.append(editLabel, editInput, editSubmit)
+        notesContainer.appendChild(editForm)
+
+        editForm.addEventListener('submit', (e) => {
+            e.preventDefault()
+            let updatedDescription = e.target.description.value
+            patchNote(updatedDescription, note, noteLi)
+            editForm.hidden = true
+        })
+    }
+
     function deleteNote(note, notesLi) {
         fetch(notesUrl + `/${note.id}`, {
             method: 'DELETE'
@@ -169,6 +217,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(() => {
             notesLi.remove()
         })
+        .catch (error => error.message)
     }
 
     function deleteMeditation(meditation, liList) {
@@ -180,6 +229,7 @@ document.addEventListener('DOMContentLoaded', function() {
             liList.remove()
             console.log('done')
         })
+        .catch (error => error.message)
     }
 
     // function
@@ -254,8 +304,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 notesForm.append(noteDateLabel, noteDateInput,label, input, submitInput)
                 notesContainer.appendChild(notesForm)
 
-            
-
+                editButton.addEventListener('click', () => patchNoteHelper(note, noteLi))
                 deleteButton.addEventListener('click', () => deleteNote(note, noteLi))
 
                 notesForm.addEventListener('submit', (e) => {
@@ -291,54 +340,9 @@ document.addEventListener('DOMContentLoaded', function() {
         weather.append(weatherImg)
     }
 
-    function meditationList(user){
-        console.log('hi')
-        // user.meditations.forEach(meditation => {
-        //     let editMedBtn = document.createElement('button')
-        //     let deleteMedBtn = document.createElement('button')
-        //     let liList = document.createElement('li')
-            
-        //     liList.textContent = `${meditation.date} - ${meditation.name}`
-        //     editMedBtn.innerText = 'Edit'
-        //     deleteMedBtn.innerText = 'X'  
-
-        //     liList.appendChild(deleteMedBtn)
-        //     meditationUl.appendChild(liList)
-            
-        // })
-
-        // label1.htmlFor = 'addNewMeditationDate'
-        // label1.innerText = 'Date'
-
-        // label2.htmlFor = 'addNewMeditationName'
-        // label2.innerText = 'Name'
-        
-        // input1.type = 'text'
-        // input1.name = 'date'
-
-        // input2.type = 'text'
-        // input2.name = 'name'
-
-        // submitInput1.type = 'submit'
-        // submitInput1.value = "Add New Meditation"
-
-        // meditationForm.append(label1, input1, label2, input2, submitInput1)
-        // meditations.append(meditationForm)
-        // // container.appendChild(meditations)
-
-        // meditationForm.addEventListener('submit', (e) => {
-        //     e.preventDefault()
-        //     console.log('hi')
-        //     postMeditation(e, user)
-        // })
-
-    
-    }
-
     function buildMed(meditation, user) {
         user.meditations.forEach( med => {
             if (med.id == meditation.id) {
-                console.log(meditation)
                 let editMedBtn = document.createElement('button')
                 let deleteMedBtn = document.createElement('button')
                 let liList = document.createElement('li')
@@ -373,7 +377,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 meditationForm.addEventListener('submit', (e) => {
                     e.preventDefault()
-                    console.log('hi')
                     postMeditation(e, user)
                 })
             }

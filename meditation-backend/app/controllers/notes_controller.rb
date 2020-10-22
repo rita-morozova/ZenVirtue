@@ -9,9 +9,21 @@ class NotesController < ApplicationController
         render json: note
     end
 
+    def update 
+        note = Note.find(params[:id])
+        note.update(note_params)
+        render json: note
+    end
+
     def destroy
-        note = Note.find_by(id: params[:id])
+        note = Note.find(params[:id])
         note.destroy
         render json: {"Message": "Note was deleted"}
+    end
+
+    private
+
+    def note_params
+        params.require(:note).permit(:date, :meditation_id, :description)
     end
 end
