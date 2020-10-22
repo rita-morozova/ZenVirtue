@@ -53,6 +53,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Audio
     let audioUrl = 'https://audionautix.com/Music/RunningWaters.mp3'
     let audio1 = new Audio(audioUrl)
+    let rainSong = new Audio('assets/audio/rain.mp3')
+    let birdSong = new Audio('assets/audio/birds.mp3')
 
     //Quotes variables
     let randomQuote = document.querySelector('#random-quote')
@@ -281,22 +283,26 @@ document.addEventListener('DOMContentLoaded', function() {
         fiveMinBtn.addEventListener('click', (e) => {
             e.preventDefault()
             countDown(t = 300)
-            audio1.play()
+            song.play()
         })
 
         tenMinBtn.addEventListener('click', (e) => {
             e.preventDefault()
             countDown(t = 600)
+            song.play()
+            
         })
 
         fifteenMinBtn.addEventListener('click', (e) => {
             e.preventDefault()
             countDown(t = 900)
+            song.play()
         })
 
         twentyMinBtn.addEventListener('click', (e) => {
             e.preventDefault()
             countDown(t = 1200)
+            song.play()
         })
        
     }
@@ -356,6 +362,7 @@ document.addEventListener('DOMContentLoaded', function() {
            let minutes = (t- seconds) / 60 // Gives the seconds that COULD be given in minutes
            timer.innerHTML = `${minutes} : ${seconds}`
            if (t === 0){
+               song.pause()
                clearInterval(myTimer)
            }
        }
@@ -372,12 +379,11 @@ document.addEventListener('DOMContentLoaded', function() {
         let badWeatherArray = ['clouds', 'rain', 'snow', 'thunderstorm', 'drizzle', 'fog', 'mist']
         let checkAgainst = data.weather[0].description.split(' ')
         let result = badWeatherArray.some(r => checkAgainst.includes(r))
-        console.log(result)
-        // if (result == true){
-        //     play cheerful music 
-        // }else{
-        //     play rain 
-        // }
+        if (result == true){
+            song = birdSong
+        }else{
+             song = rainSong
+        }
     }
 
     function meditationList(user){
