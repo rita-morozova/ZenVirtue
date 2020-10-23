@@ -79,19 +79,6 @@ document.addEventListener('DOMContentLoaded', function() {
     let span2 = document.getElementsByClassName("close2")[0]
     quoteBtn.addEventListener('click', () => loadQuotes())
 
-    //Background variables
-    // let mountains = document.createElement('img')
-    // mountains.src ='assets/css/images/mountains1.jpg'
-    // let forest =document.createElement('img')
-    // forest.src ='assets/css/images/forest.jpg'
-    // let zen =document.createElement('img')
-    // zen.src ='assets/css/images/zen.jpg'
-    // let river = document.createElement('img')
-    // river.src='assets/css/images/river.jpg'
-    // let ocean = document.createElement('img')
-    // ocean.src ='assets/css/images/ocean.jpg'
-
-
 
     // Event listener
     window.setTimeout(() => {
@@ -389,6 +376,7 @@ document.addEventListener('DOMContentLoaded', function() {
            let seconds = t % 60 // Seconds that can't be written in min
            let minutes = (t- seconds) / 60 // Gives the seconds that COULD be given in minutes
            timer.innerHTML = `${minutes} : ${seconds}`
+           timer.style.fontSize='60pt'
            if (t === 0){
                song.pause()
                clearInterval(myTimer)
@@ -599,17 +587,5 @@ document.addEventListener('DOMContentLoaded', function() {
     function changeBackgroundHome() { 
         document.body.style.backgroundImage = "url(assets/css/images/background.jpg)"; 
     } 
-
-    
-
-
-    
-
-    
-
-
-
-    
-
 
 })

@@ -2766,7 +2766,7 @@ fieldset:disabled a.btn {
 
 .btn-light {
   color: #212529;
-  background-color: rgba(244, 250,240, 0.6);  
+  background-color: rgba(248,249,250, 0.2); 
   border-color: #f8f9fa;
   opacity: 0.8;
 }
@@ -4321,7 +4321,7 @@ input[type="button"].btn-block {
   align-items: center;
   -ms-flex-pack: justify;
   justify-content: space-between;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1rem; 
 }
 
 .navbar .container,
