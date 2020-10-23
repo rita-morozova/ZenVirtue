@@ -147,6 +147,11 @@ document.addEventListener('DOMContentLoaded', function() {
         let newLi = document.createElement('li')
         newLi.textContent = `${e.target.date.value} - ${e.target.name.value}`
         meditationUl.appendChild(newLi)
+        let newEdit = document.createElement('button')
+        let newDelete=document.createElement('button')
+        newEdit.innerText="Edit"
+        newDelete.innerText="X"
+        newLi.append(newEdit, newDelete)
 
         const meditation = {
             date: e.target.date.value,
@@ -264,6 +269,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function patchMeditation(e, meditation, user, liList){
         
        liList.innerText= `${e.target.date.value} - ${e.target.name.value}`
+      
+
         const meditationPatched = {
             date: e.target.date.value,
             name: e.target.name.value
@@ -405,6 +412,7 @@ document.addEventListener('DOMContentLoaded', function() {
              song = rainSong
         }
     }
+    
 
     function meditationList(user){
         user.meditations.forEach(meditation => {
@@ -427,6 +435,8 @@ document.addEventListener('DOMContentLoaded', function() {
             editMedBtn.addEventListener('click', () => {
                 editMeditationEntry(meditation, user, liList)
             })
+
+            
         })
 
         label1.htmlFor = 'addNewMeditationDate'

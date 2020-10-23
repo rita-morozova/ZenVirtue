@@ -5,7 +5,7 @@ class NotesController < ApplicationController
     end
 
     def create
-        note = Note.create(note_params)
+        note = Note.create(date: params[:date], meditation_id: params[:meditation_id], description: params[:description])
         render json: note
     end
 
