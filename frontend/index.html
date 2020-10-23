@@ -27,43 +27,38 @@
 
         </div>
         <div class="container darkBack white topTitle" hidden=''>
-            <h1 id="title">ZenVirtue</h1>
 
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="motivation-quote" href="#">Get Motivated</a>
-                <button class="quote-button" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="" aria-expanded="false" aria-label="Toggle navigation">
-                </button>
-              
+            <nav class="navbar navbar-expand-lg navbar-light"> 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                   <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                      <a class="nav-link" href="#">Meditation Log <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">My Notes</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Get Motivated</a>
-                      </li>
                     <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Meditation
-                      </a>
-                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Morning in the Mountains</a>
-                        <a class="dropdown-item" href="#">Walking in the Forest</a>
-                        <a class="dropdown-item" href="#">Dreaming by the River</a>
-                        <a class="dropdown-item" href="#">Ocean Breeze</a>
-                        <a class="dropdown-item" href="#">Zen Garden</a>
-                      </div>
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Meditation
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <a class="dropdown-item" href="#">Morning in the Mountains</a>
+                          <a class="dropdown-item" href="#">Walking in the Forest</a>
+                          <a class="dropdown-item" href="#">Dreaming by the River</a>
+                          <a class="dropdown-item" href="#">Ocean Breeze</a>
+                          <a class="dropdown-item" href="#">Zen Garden</a>
+                        </div>
+                      </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="med-log" href="#meditations">Meditation Log <span class="sr-only">(current)</span></a>
                     </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="notes-con" href="#notes-container">My Notes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="randomQte" href="#random-quote">Get Motivated</a>
+                      </li>
+                   
                   </ul>
                 </div>
               </nav>
 
               
-
-
+              <h1 id="title">ZenVirtue</h1>
             <div id='weather'>
                 <h2 id ="weather-city">Seattle</h2>
                 <h1 id='weather-temp'></h1>
@@ -76,22 +71,35 @@
                 <button class='twentyMinBtn' data-time="1200">20 min</button>
             </div>
             <div id="meditations">
-                <button class="meditation-log">Meditation Log</button>
-                <!-- <h1>Meditation Log</h1> -->
+                <div id="medModal" class="modal">
+                    <div class="modal-content">
+                            <span class="close">&times;</span>
+                            <h2> Meditation Log</h2>
                 <ul class="meditation-list">
-
                 </ul>
+                </div>
+            </div>
             </div>
             <br>
             <div id ="random-quote">
-                <button id="getquotes" value="Quotes">Get Motivated</button>    
+                <div id="quoteModal" class="modal">
+                    <div class="modal-content-quote">
+                        <span class="close2">&times;</span>
+                    <button id="getquotes" value="Quotes">Get Motivated</button>   
+                    </div>
+                </div>
             </div>
             <div id="notes-container">
-                <button class="my-notes">My Notes</button>
-                <!-- <h1>My Notes</h1> -->
+                <div id='noteModal' class ='modal'>
+                    <div class="modal-content1">
+                        <span class="close1">&times;</span>
+                        <h2>My Notes</h2>
+                
                 <ul class="note-list">
 
                 </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </body>

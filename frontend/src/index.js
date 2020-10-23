@@ -40,6 +40,10 @@ document.addEventListener('DOMContentLoaded', function() {
     let label = document.createElement('label')
     let input = document.createElement('input')
     let submitInput = document.createElement('input')
+    let notesBtn = document.querySelector("#notes-con")
+    let noteModal= document.querySelector('#noteModal')
+    let modalContent1 = document.querySelector('.modal-content1')
+    let span1 = document.getElementsByClassName("close1")[0]
 
     //meditation list variables
     let meditations = document.querySelector('#meditations')
@@ -50,7 +54,11 @@ document.addEventListener('DOMContentLoaded', function() {
     let input1 = document.createElement('input')
     let input2 = document.createElement('input')
     let submitInput1 = document.createElement('input')
-     
+    let medModal = document.querySelector('#medModal')
+    let modalContent = document.querySelector('.modal-content')
+    let modalBtn = document.querySelector('#med-log') 
+    let span = document.getElementsByClassName("close")[0]
+
     // Audio
     let audioUrl = 'https://audionautix.com/Music/RunningWaters.mp3'
     let audio1 = new Audio(audioUrl)
@@ -63,7 +71,14 @@ document.addEventListener('DOMContentLoaded', function() {
     let quoteh2 = document.createElement('h2')
     let quotesArray = ["The secret of getting ahead is getting started.", "The best time to plant a tree was 20 years ago. The second best time is now.", "If people are doubting how far you can go, go so far that you can’t hear them anymore.", 'Your limitation—it’s only your imagination.',  'Push yourself, because no one else is going to do it for you.', 'Sometimes later becomes never. Do it now.', ' Great things never come from comfort zones.', 'Dream it. Wish it. Do it.', 'Success doesn’t just find you. You have to go out and get it.', 'The harder you work for something, the greater you’ll feel when you achieve it.', 'Dream bigger. Do bigger.', 'Don’t stop when you’re tired. Stop when you’re done.', 'Wake up with determination. Go to bed with satisfaction.', 'Do something today that your future self will thank you for.', 'Little things make big days.', 'It’s going to be hard, but hard does not mean impossible.', ' Don’t wait for opportunity. Create it.', 'Sometimes we’re tested not to show our weaknesses, but to discover our strengths.', 'The key to success is to focus on goals, not obstacles.', 'Dream it. Believe it. Build it.']
     let quoteBtn = document.querySelector('#getquotes')
+    let quoteBtnNav = document.querySelector('#randomQte')
+    let quoteModal = document.querySelector("#quoteModal")
+    let quoteModalContent = document.querySelector('.modal-content-quote')
+    let span2 = document.getElementsByClassName("close2")[0]
     quoteBtn.addEventListener('click', () => loadQuotes())
+
+    //Background variables
+
 
 
     // Event listener
@@ -210,7 +225,7 @@ document.addEventListener('DOMContentLoaded', function() {
         editSubmit.innerText = 'Update Note'
 
         editForm.append(editLabel, editInput, editSubmit)
-        notesContainer.appendChild(editForm)
+        modalContent1.appendChild(editForm)
 
         editForm.addEventListener('submit', (e) => {
             e.preventDefault()
@@ -339,7 +354,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 notesUl.appendChild(noteLi)
 
                 notesForm.append(noteDateLabel, noteDateInput,label, input, submitInput)
-                notesContainer.appendChild(notesForm)
+                modalContent1.appendChild(notesForm)
 
                 editButton.addEventListener('click', () => patchNoteHelper(note, user))
                 deleteButton.addEventListener('click', () => deleteNote(note, noteLi))
@@ -423,10 +438,10 @@ document.addEventListener('DOMContentLoaded', function() {
         input2.name = 'name'
 
         submitInput1.type = 'submit'
-        submitInput1.value = "Add New Meditation"
+        submitInput1.value = "Add"
 
         meditationForm.append(label1, input1, label2, input2, submitInput1)
-        meditations.append(meditationForm)
+        modalContent.append(meditationForm)
 
         meditationForm.addEventListener('submit', (e) => {
             e.preventDefault()
@@ -437,7 +452,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function editMeditationEntry(meditation, user, liList){
         let divEditMed = document.createElement('div')
         divEditMed.getElementsByClassName = 'edit-meditation'
-        meditations.appendChild(divEditMed)
+        modalContent.appendChild(divEditMed)
 
         let meditationEditForm = document.createElement('form')
         let editLabel = document.createElement('label')
@@ -474,7 +489,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function loadQuotes(){
         quoteDiv.className = 'quote-div'
         randomQuote.append(quoteDiv)
-        quoteDiv.append(quoteh2)
+        quoteModalContent.append(quoteh2)
        
 
         for(i =0; i< quotesArray.length; i++){
@@ -483,7 +498,49 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    
+    //Navigation Bar Events
+
+    modalBtn.onclick = function(){
+        medModal.style.display = 'block'
+    }
+
+    span.onclick = function() {
+        medModal.style.display = 'none'
+    }
+
+    window.onclick = function(event){
+        if(event.target == medModal){
+            medModal.style.display ='none'
+        }
+    }
+
+    notesBtn.onclick = function(){
+        noteModal.style.display = 'block'
+    }
+
+    span1.onclick = function() {
+        noteModal.style.display = 'none'
+    }
+
+    window.onclick = function(event){
+        if(event.target == noteModal){
+            noteModal.style.display ='none'
+        }
+    }
+
+    quoteBtnNav.onclick = function(){
+        quoteModal.style.display = 'block'
+    }
+
+    span2.onclick = function() {
+        quoteModal.style.display = 'none'
+    }
+
+    window.onclick = function(event){
+        if(event.target == quoteModal){
+            quoteModal.style.display ='none'
+        }
+    }
 
 
 
