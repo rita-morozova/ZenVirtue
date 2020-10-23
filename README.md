@@ -9,8 +9,8 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 Please make sure to update tests as appropriate.
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/) (edited) 
+[MIT](https://choosealicense.com/licenses/mit/) 
 
-# Created By
+## Created By
 * Jasper Reed (https://github.com/jasperwreed)
 * Margarita Morozova (https://github.com/rita-morozova)
