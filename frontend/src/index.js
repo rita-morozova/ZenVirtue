@@ -66,6 +66,9 @@ document.addEventListener('DOMContentLoaded', function() {
     let audio1 = new Audio(audioUrl)
     let rainSong = new Audio('assets/audio/rain.mp3')
     let birdSong = new Audio('assets/audio/birds.mp3')
+    let pauseButton = document.createElement('button')
+    let playButton= document.createElement('button')
+    pauseButton.innerText= 'II'
 
     //Quotes variables
     let randomQuote = document.querySelector('#random-quote')
@@ -395,6 +398,23 @@ document.addEventListener('DOMContentLoaded', function() {
        }
     }
 
+    let controlBtn = document.getElementById('play-pause');
+    
+    function playPause() {
+        if (song.paused) {
+            song.play();
+            controlBtn.className = "pause";
+        } else { 
+            song.pause();
+            controlBtn.className = "play";
+        }
+    }
+    
+    controlBtn.addEventListener("click", playPause);
+    // song.addEventListener("ended", function() {
+    //   controlBtn.className = "play";
+    // });
+
     function buildWeather(data){
         // weatherImg.className = 'weather-icon'
         weatherImg.src = "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png"
@@ -601,5 +621,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function changeBackgroundHome() { 
         document.body.style.backgroundImage = "url(assets/css/images/background.jpg)"; 
     } 
+
+    
 
 })
