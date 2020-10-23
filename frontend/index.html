@@ -10,7 +10,7 @@
     </head>
     <body>
         <div class="welcome center" id="welcome-container">
-            <p>Welcome to</p>
+            <p style="font-family:Courier New; font-size: 16pt;">Welcome to</p>
             <h1 class="titleMain bigHeading">ZenVirtue</h1>
         </div>
         <div class="welcome-form center" hidden=''>
@@ -28,21 +28,10 @@
         </div>
         <div class="container darkBack white topTitle" hidden=''>
 
-            <nav class="navbar navbar-expand-lg navbar-light"> 
+            <nav class="navbar navbar-expand-lg navbar-light "> 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                  <ul class="navbar-nav mr-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Meditation
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                          <a class="dropdown-item" href="#">Morning in the Mountains</a>
-                          <a class="dropdown-item" href="#">Walking in the Forest</a>
-                          <a class="dropdown-item" href="#">Dreaming by the River</a>
-                          <a class="dropdown-item" href="#">Ocean Breeze</a>
-                          <a class="dropdown-item" href="#">Zen Garden</a>
-                        </div>
-                      </li>
+                  <ul class="navbar-nav mr-auto ">
+                   
                     <li class="nav-item">
                       <a class="nav-link" id="med-log" href="#meditations">Meditation Log <span class="sr-only">(current)</span></a>
                     </li>
@@ -52,19 +41,31 @@
                     <li class="nav-item">
                         <a class="nav-link" id="randomQte" href="#random-quote">Get Motivated</a>
                       </li>
-                   
                   </ul>
                 </div>
               </nav>
 
               
               <h1 id="title">ZenVirtue</h1>
-            <div id='weather'>
+            <div id='weather' class='float-right'>
                 <h2 id ="weather-city">Seattle</h2>
                 <h1 id='weather-temp'></h1>
                 <h3 id='weather-desc'></h3>
             </div>
+            <div class="backgrounds">
+                <button id='ocean' class="btn btn-light">Ocean Breeze</button>
+                 <button id='mountain' class="btn btn-light">Mountain Sunrise</button>
+                 <button id='forest' class="btn btn-light">Walking in the Forest</button>
+                 <button id='zen' class="btn btn-light">Zen Garden</button>
+                 <button id='river' class="btn btn-light">Dreaming by a River</button>
+                 <button id='home' class="btn btn-light">Home Background</button>
+            </div>
+             <br>
+                <br>
+                     <br>
                <div id="time-options">
+                   <div id='timer-clock'>
+                   </div>
                 <button class='fiveMinBtn' data-time="300">5 min</button>
                 <button class='tenMinBtn' data-time="600">10 min</button>
                 <button class='fifteenMinBtn' data-time="900">15 min</button>
@@ -80,7 +81,6 @@
                 </div>
             </div>
             </div>
-            <br>
             <div id ="random-quote">
                 <div id="quoteModal" class="modal">
                     <div class="modal-content-quote">

@@ -9,10 +9,21 @@ body {
    letter-spacing: 20px;
 }
 
+#timer-clock{
+    /* position:relative;
+    font-size: x-large;
+    font-weight: 300; */
+    color: white;
+}
+
+
+
+
+
  
 
 #welcome-container, #login-container {
-        width: 440px;  
+        width: auto;  
         overflow: hidden;  
         margin: auto;  
         margin: 20 0 0 450px;  
@@ -86,18 +97,18 @@ ul {
 
   .modal-content1{
     background-color: rgba(244, 250,240, 1);  
-    margin: 15% auto; /* 15% from the top and centered */
+    margin: 15% auto; 
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    width: 80%; 
   }
 
   .modal-content-quote{
     background-color: rgba(244, 250,240, 1);  
-    margin: 15% auto; /* 15% from the top and centered */
+    margin: 15% auto; 
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    width: 80%; 
   }
 
   

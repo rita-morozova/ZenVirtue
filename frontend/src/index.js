@@ -19,18 +19,20 @@ document.addEventListener('DOMContentLoaded', function() {
     let tenMinBtn = document.querySelector('.tenMinBtn')
     let fifteenMinBtn = document.querySelector('.fifteenMinBtn')
     let twentyMinBtn = document.querySelector('.twentyMinBtn')
+    let clock= document.querySelector('#timer-clock')
 
     // Weather HTML variables
     let weather = document.querySelector('#weather')
     let weatherTemp = document.querySelector('#weather-temp')
     let weatherDesc = document.querySelector('#weather-desc')
     let weatherImg = document.createElement('img')
+    let weatherCity = document.querySelector('#weather-city')
    
 
     // Timer HTML Variables
     let timer = document.createElement('h2')
-    timeOptions.appendChild(timer) 
-
+    clock.appendChild(timer) 
+    
     // notes variables
     let notesContainer = document.querySelector('#notes-container')
     let notesUl = document.querySelector('.note-list')
@@ -78,6 +80,16 @@ document.addEventListener('DOMContentLoaded', function() {
     quoteBtn.addEventListener('click', () => loadQuotes())
 
     //Background variables
+    // let mountains = document.createElement('img')
+    // mountains.src ='assets/css/images/mountains1.jpg'
+    // let forest =document.createElement('img')
+    // forest.src ='assets/css/images/forest.jpg'
+    // let zen =document.createElement('img')
+    // zen.src ='assets/css/images/zen.jpg'
+    // let river = document.createElement('img')
+    // river.src='assets/css/images/river.jpg'
+    // let ocean = document.createElement('img')
+    // ocean.src ='assets/css/images/ocean.jpg'
 
 
 
@@ -85,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function() {
     window.setTimeout(() => {
         welcomeDiv.hidden = true
         welcomeFormDiv.hidden = false
-    }, 2000)
+    }, 3000)
 
     // call functions
     buildUser()
@@ -390,7 +402,7 @@ document.addEventListener('DOMContentLoaded', function() {
         weatherTemp.innerText = Math.ceil(data.main.temp) + '°F'
         weatherDesc.innerHTML=data.weather[0].description 
 
-        weather.append(weatherImg)
+        weatherTemp.append(weatherImg)
 
         let badWeatherArray = ['clouds', 'rain', 'snow', 'thunderstorm', 'drizzle', 'fog', 'mist']
         let checkAgainst = data.weather[0].description.split(' ')
@@ -508,11 +520,6 @@ document.addEventListener('DOMContentLoaded', function() {
         medModal.style.display = 'none'
     }
 
-    window.onclick = function(event){
-        if(event.target == medModal){
-            medModal.style.display ='none'
-        }
-    }
 
     notesBtn.onclick = function(){
         noteModal.style.display = 'block'
@@ -520,12 +527,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     span1.onclick = function() {
         noteModal.style.display = 'none'
-    }
-
-    window.onclick = function(event){
-        if(event.target == noteModal){
-            noteModal.style.display ='none'
-        }
     }
 
     quoteBtnNav.onclick = function(){
@@ -540,8 +541,75 @@ document.addEventListener('DOMContentLoaded', function() {
         if(event.target == quoteModal){
             quoteModal.style.display ='none'
         }
+        else if(event.target == medModal){
+            medModal.style.display ='none'
+        }
+        else if(event.target == noteModal){
+            noteModal.style.display ='none'
+        }
     }
 
+    //Change Background on Click
+
+    let ocean= document.querySelector('#ocean')
+    
+    ocean.addEventListener('click', ()=>{
+        changeBackgroundOcean()
+    })
+    function changeBackgroundOcean() { 
+        document.body.style.backgroundImage = "url(assets/css/images/ocean.jpg)"; 
+    } 
+
+    let mountain= document.querySelector('#mountain')
+    mountain.addEventListener('click', ()=>{
+        changeBackgroundMountain()
+    })
+    function changeBackgroundMountain() { 
+        document.body.style.backgroundImage = "url(assets/css/images/mountains1.jpg)"; 
+    } 
+
+    let river= document.querySelector('#river')
+    river.addEventListener('click', ()=>{
+        changeBackgroundRiver()
+    })
+    function changeBackgroundRiver() { 
+        document.body.style.backgroundImage = "url(assets/css/images/river.jpg)"; 
+    } 
+
+    let zen= document.querySelector('#zen')
+    zen.addEventListener('click', ()=>{
+        changeBackgroundZen()
+    })
+    function changeBackgroundZen() { 
+        document.body.style.backgroundImage = "url(assets/css/images/zen.jpg)"; 
+    } 
+
+    let forest= document.querySelector('#forest')
+    forest.addEventListener('click', ()=>{
+        changeBackgroundForest()
+    })
+    function changeBackgroundForest() { 
+        document.body.style.backgroundImage = "url(assets/css/images/forest.jpg)"; 
+    } 
+
+    let home= document.querySelector('#home')
+    home.addEventListener('click', ()=>{
+        changeBackgroundHome()
+    })
+    function changeBackgroundHome() { 
+        document.body.style.backgroundImage = "url(assets/css/images/background.jpg)"; 
+    } 
+
+    
+
+
+    
+
+    
+
+
+
+    
 
 
 })
