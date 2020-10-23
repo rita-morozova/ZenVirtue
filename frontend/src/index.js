@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function() {
             meditation_id = meditation.id
         })
 
-        const note = {
+        const noteData = {
             date: e.target.date.value,
             description: e.target.description.value,
             meditation_id: meditation_id
@@ -183,7 +183,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 'Content-Type' : 'application/json',
                 'Accept': 'application/json'
             },
-            body: JSON.stringify(note)
+            body: JSON.stringify(noteData)
         })
         .then(resp => resp.json())
         .then(note => notesList(note, user))
