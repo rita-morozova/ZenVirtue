@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <script src="https://kit.fontawesome.com/c2a7d34698.js"></script>
         <script defer src="src/index.js"></script>
-        <!-- <link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css"> -->
+        <link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="assets/css/style.css">
     </head>
     <body>
@@ -26,32 +26,69 @@
         <div class="allMed darkBack" hidden=''>
 
         </div>
-        <div class="container darkBack white" hidden=''>
-            <h1 class="topTitle">ZenVirtue</h1>
+        <div class="container darkBack white topTitle" hidden=''>
+            <h1 id="title">ZenVirtue</h1>
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="motivation-quote" href="#">Get Motivated</a>
+                <button class="quote-button" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="" aria-expanded="false" aria-label="Toggle navigation">
+                </button>
+              
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                      <a class="nav-link" href="#">Meditation Log <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">My Notes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Get Motivated</a>
+                      </li>
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Meditation
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Morning in the Mountains</a>
+                        <a class="dropdown-item" href="#">Walking in the Forest</a>
+                        <a class="dropdown-item" href="#">Dreaming by the River</a>
+                        <a class="dropdown-item" href="#">Ocean Breeze</a>
+                        <a class="dropdown-item" href="#">Zen Garden</a>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </nav>
+
+              
+
+
             <div id='weather'>
-                <h1 id='weather-temp'></h1>
                 <h2 id ="weather-city">Seattle</h2>
+                <h1 id='weather-temp'></h1>
                 <h3 id='weather-desc'></h3>
             </div>
-            
-            <div id="time-options">
+               <div id="time-options">
                 <button class='fiveMinBtn' data-time="300">5 min</button>
                 <button class='tenMinBtn' data-time="600">10 min</button>
                 <button class='fifteenMinBtn' data-time="900">15 min</button>
                 <button class='twentyMinBtn' data-time="1200">20 min</button>
             </div>
             <div id="meditations">
-                <h1>Meditation Log</h1>
+                <button class="meditation-log">Meditation Log</button>
+                <!-- <h1>Meditation Log</h1> -->
                 <ul class="meditation-list">
 
                 </ul>
             </div>
             <br>
             <div id ="random-quote">
-                <button id="getquotes" value="Quotes">Motivation Here</button>    
+                <button id="getquotes" value="Quotes">Get Motivated</button>    
             </div>
             <div id="notes-container">
-                <h1>My Notes</h1>
+                <button class="my-notes">My Notes</button>
+                <!-- <h1>My Notes</h1> -->
                 <ul class="note-list">
 
                 </ul>

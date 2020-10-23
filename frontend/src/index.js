@@ -370,7 +370,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function buildWeather(data){
-        weatherImg.className = 'weather-icon'
+        // weatherImg.className = 'weather-icon'
         weatherImg.src = "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png"
         weatherTemp.innerText = Math.ceil(data.main.temp) + '°F'
         weatherDesc.innerHTML=data.weather[0].description 
