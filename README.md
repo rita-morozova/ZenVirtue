@@ -1,7 +1,7 @@
 # ZenVirtue
 ZenVirtue is a meditation application that allows users to meditate for a certain amount of time while music plays in the background. Users can log meditation sessions and keep track of notes as well. We've also included a section that shows the weather, the music that plays during the meditation is dependent on the weather outside.
 
-![screenshot] (css/images/screen.png)
+![screenshot] (https://github.com/rita-morozova/mod-3-project/blob/main/frontend/assets/css/images/screen.png)
 
 ## Code
 A mixture of JavaScript, HTML, CSS, and Bootstrap were used to bring the front end to life while the back end was written with Ruby on Rails.
